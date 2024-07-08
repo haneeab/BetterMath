@@ -44,3 +44,19 @@ def register_teacher(request):
         user_form = UserRegisterForm()
         teacher_form = TeacherProfileForm()
     return render(request, 'register_teacher.html', {'user_form': user_form, 'teacher_form': teacher_form})
+# Create your views here.
+from django.shortcuts import render
+from django.http import HttpResponse
+
+def home(request):
+    return render(request, 'HomePage.html')
+
+
+
+
+
+
+
+
+def contact(request):
+    return HttpResponse('contact Page')
