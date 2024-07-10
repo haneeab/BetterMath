@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="800a31c9-4f37-4606-bc8b-cc19b8f256e3" name="Changes" comment="Merge remote-tracking branch 'origin/main'">
-      <change afterPath="$PROJECT_DIR$/templates/AdminLogIn.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/BetterMath.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/BetterMath.iml" afterDir="false" />
+    <list default="true" id="800a31c9-4f37-4606-bc8b-cc19b8f256e3" name="Changes" comment="Merge branch 'main' of https://github.com/haneeab/BetterMath">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ourapp/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/ourapp/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ourapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/ourapp/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ourapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/ourapp/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/register_student.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/register_student.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/HomePage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/HomePage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/navbar.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,6 +116,18 @@
       <updated>1720429432383</updated>
       <workItem from="1720429435388" duration="37000" />
     </task>
+    <task id="LOCAL‎-00001" summary="Merge branch 'main' of https://github.com/haneeab/BetterMath">
+      <created>1720632836236</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL‎-00001" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1720632836236</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge branch 'main' of https://github.com/haneeab/BetterMath" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'main' of https://github.com/haneeab/BetterMath" />
   </component>
 </project>
