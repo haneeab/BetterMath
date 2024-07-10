@@ -52,7 +52,8 @@ from django.http import HttpResponse
 def home(request):
     return render(request, 'HomePage.html')
 
-
+def login_teacher(request):
+    return render(request, 'login_teacher.html')
 
 
 
