@@ -6,6 +6,7 @@ urlpatterns = [
 
     path('register_student.html', views.register_student, name='register_student'),
     path('', views.home),
+    path('login_teacher/', views.login_teacher),
 
     # path('register_teacher.html', views.register_teacher, name='register_teacher'),
 
