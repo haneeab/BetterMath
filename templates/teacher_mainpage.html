@@ -47,7 +47,7 @@ https://www.tooplate.com/view/2128-tween-agency
         <nav class="navbar fixed-top navbar-expand-lg">
             <div class="container">
 
-                <a href="{% url 'HomePage' %}" class="navbar-brand">
+                <a href="index.html" class="navbar-brand">
                     <i class="bi-layers"></i> BetterMath
                 </a>
 
@@ -63,30 +63,20 @@ https://www.tooplate.com/view/2128-tween-agency
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-lg-5">
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'HomePage' %}">Home</a>
+                            <a class="nav-link" href="#section_1">Home</a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="#section_2">About</a>
                         </li>
-                        <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Log In
-    </a>
-    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="{% url 'TeacherLogIn' %}">Teacher</a>
-        <a class="dropdown-item" href="{% url 'AdminLogIn' %} ">Admin</a>
-        <a class="dropdown-item" href="#student_login">Student</a>
-    </div>
-</li>
+
+
 
 {#                        <li class="nav-item">#}
 {#                            <a class="nav-link" href="#section_3">Log In</a>#}
 {#                        </li>#}
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="register_student.html">Sign Up</a>
-                        </li>
+
 
 {#                        <li class="nav-item">#}
 {#                            <a class="nav-link" href="#section_5">Pricing</a>#}
@@ -103,8 +93,9 @@ https://www.tooplate.com/view/2128-tween-agency
 {#                            <i class="bi-download ms-2"></i>#}
 {#                        </a>#}
 {#                    </div>#}
+
                 </div>
-            </div>
+
         </nav>
 
         <main>
@@ -115,151 +106,62 @@ https://www.tooplate.com/view/2128-tween-agency
 
                         <div class="col-lg-8 col-12">
                             <div class="heroText">
-                                <h1 class="text-white mb-lg-5 mb-4" >Welcome to Better Math, where learning math becomes an exciting journey.</h1>
 
-{#                                <a href="https://www.youtube.com/watch?v=AYaHuZ4BB6Y" class="popup-youtube play-icon-wrap d-flex align-items-center">#}
-{#                                    <i class="bi-play play-icon"></i>#}
-{##}
-{#                                    <small>1:49 Minutes</small>#}
-{#                                </a>#}
-                            </div>
-                        </div>
 
-                    </div>
-                </div>
 
-                <div class="overlay"></div>
+
+
+
+<!--1️⃣ code CSS below -->
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Koulen&family=Lato&family=Nunito&family=Playfair+Display:ital@1&family=Prata&family=Raleway:ital,wght@1,100&family=Roboto&family=Roboto+Condensed&family=Teko&display=swap');
+
+.btn{
+font-family: Roboto, sans-serif;
+font-weight: 0;
+font-size: 20px;
+color: #000000ba;
+background: linear-gradient(80deg, rgba(221, 229, 229, 0.33) 0%, #96948d 100%);
+padding: 30px 50px;
+border: solid #000000ba 2px;
+box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+border-radius: 50px;
+transition : 1000ms;
+transform: translateY(0);
+display: flex;
+flex-direction: row;
+align-items: center;
+cursor: pointer;
+
+}
+
+.btn:hover{
+transition : 1000ms;
+padding: 10px 50px;
+transform : translateY(-0px);
+background: linear-gradient(90deg, #ccc50000 0%, #96948d 100%);
+color: #00cc6600;
+border: solid 2px #0077cc00;
+
+}
+
+</style>
+
+<center>
+<a href="TeacherTable.html">
+<button class="btn">Add Quiz</button>
+    </a>
+                                <br>
+    <a href="">
+<button class="btn"> Add Materials</button>
+    </a>
+
+    </center>
             </section>
 
-            <section class="about section-padding" id="section_2">
-                <div class="container">
-                    <div class="row">
 
-                        <div class="col-lg-6 col-12">
-                            <h2 class="mb-5">About BetterMath</h2>
-                        </div>
-
-                        <div class="col-lg-4 col-12 ms-lg-auto mb-5 mb-lg-0">
-                            <nav>
-                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    <button class="nav-link active" id="nav-intro-tab" data-bs-toggle="tab" data-bs-target="#nav-intro" type="button" role="tab" aria-controls="nav-intro" aria-selected="true">Introduction</button>
-
-{#                                    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>#}
-
-                                    <button class="nav-link" id="nav-faq-tab" data-bs-toggle="tab" data-bs-target="#nav-faq" type="button" role="tab" aria-controls="nav-faq" aria-selected="false">FAQs</button>
-                                </div>
-                            </nav>
-                        </div>
-
-                        <div class="col-12">
-                            <div class="tab-content" id="nav-tabContent">
-                                <div class="tab-pane fade show active" id="nav-intro" role="tabpanel" aria-labelledby="nav-intro-tab">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-12 mb-lg-0 mb-4">
-                                            <img src="{% static 'images/webpage-browser-digital-icon-symbols-concept.jpg' %}" class="img-fluid" alt="">
-                                        </div>
-
-                                        <div class="col-lg-5 col-12 m-auto">
-                                            <h3 class="mb-3">Better Math</h3>
-
-                                            <p>BetterMath is dedicated to transforming the way students approach mathematics. Our mission is to make math accessible, engaging, and enjoyable for learners of all levels. We believe that everyone has the potential to excel in math, and we are here to provide the tools and support needed to unlock that potential. Our comprehensive resources, interactive lessons, and expert guidance are tailored to help students build a strong mathematical foundation and achieve their academic goals. Join us at Math Mentor and embark on a journey to mathematical excellence.</p>
-
-                                            <p>Dive into our resources and discover a world of mathematical wonders designed just for you .</p>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-{#                                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">#}
-{#                                    <div class="row">#}
-{#                                        <div class="col-lg-5 col-12 m-auto">#}
-{#                                            <h3 class="mb-3">Marie Smarty, CEO</h3>#}
-{##}
-{#                                            <p>Our priority is your happiness working together with us. We guarantee you the best service quality from us. Feel free to talk to us via email, twitter, or linkedin.</p>#}
-{##}
-{#                                            <ul class="social-icon mt-lg-5 mt-3">#}
-{#                                                <li class="me-3"><strong>Where to find?</strong></li>#}
-{##}
-{#                                                <li><a href="https://twitter.com/search?q=tooplate" class="social-icon-link bi-twitter"></a></li>#}
-{##}
-{#                                                <li><a href="#" class="social-icon-link bi-linkedin"></a></li>#}
-{##}
-{#                                                <li><a href="#" class="social-icon-link bi-envelope"></a></li>#}
-{#                                            </ul>#}
-{#                                        </div>#}
-{##}
-{#                                        <div class="col-lg-6 col-12 mt-lg-0 mt-4">#}
-{#                                            <img src="{% static 'images/dream-about-working-corporation-became-true.jpg' %}" class="img-fluid" alt="">#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-
-                                <div class="tab-pane fade" id="nav-faq" role="tabpanel" aria-labelledby="nav-faq-tab">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-12 mb-lg-0 mb-4">
-                                            <img src="{% static 'images/php-programming-html-coding-cyberspace-concept.jpg' %}" class="img-fluid" alt="">
-                                        </div>
-
-                                        <div class="col-lg-5 col-12 m-auto">
-                                            <h3 class="mb-3">Frequenlty Asked Questions</h3>
-
-                                            <div class="accordion" id="accordionGeneral">
-                                                <div class="accordion-item">
-                                                    <h2 class="accordion-header" id="headingOne">
-                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionGeneralOne" aria-expanded="true" aria-controls="accordionGeneralOne">
-                                                        What is BetterMath Website?
-                                                        </button>
-                                                    </h2>
-
-                                                    <div id="accordionGeneralOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionGeneral">
-
-                                                        <div class="accordion-body">
-                                                            <p class="large-paragraph"><strong>BetterMath </strong> is an innovative online platform designed to enhance students' understanding and skills in mathematics. Offering interactive tools, comprehensive resources, and personalized guidance, BetterMath supports students in mastering math concepts and boosting their confidence.</p>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="accordion-item">
-                                                    <h2 class="accordion-header" id="headingTwo">
-                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionGeneralTwo" aria-expanded="false" aria-controls="accordionGeneralTwo">
-                                                        What are available services?
-                                                        </button>
-                                                    </h2>
-
-                                                    <div id="accordionGeneralTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionGeneral">
-
-                                                        <div class="accordion-body">
-                                                            <p class="large-paragraph">BetterMath offers a range of services to support students in their math journey. Our interactive lessons cover a wide range of mathematical topics, making learning engaging and comprehensive. Students can practice with an extensive library of problems, receiving instant feedback and solutions. Personalized tutoring sessions with experienced math educators provide one-on-one support. We offer a wealth of study resources, including guides, cheat sheets, and reference materials. Progress tracking tools help students monitor their learning and set goals. Our community support forum fosters knowledge sharing and collaboration. Additionally, we provide resources and practice tests for standardized exam preparation.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-{#                                                <div class="accordion-item">#}
-{#                                                    <h2 class="accordion-header" id="headingThree">#}
-{#                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordionGeneralThree" aria-expanded="false" aria-controls="accordionGeneralThree">#}
-{#                                                        How many successful projects?#}
-{#                                                        </button>#}
-{#                                                    </h2>#}
-{##}
-{#                                                    <div id="accordionGeneralThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionGeneral">#}
-{##}
-{#                                                        <div class="accordion-body">#}
-{#                                                            <p class="large-paragraph">We have over 280+ successful projects for different companies. There are great experiences of working together with different clients all over the world.</p>#}
-{#                                                        </div>#}
-{#                                                    </div>#}
-{#                                                </div>#}
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
 
 {#            <section class="services section-padding" id="section_3">#}
 {#                <div class="container">#}
@@ -510,7 +412,7 @@ https://www.tooplate.com/view/2128-tween-agency
 {#                                    <div class="col-lg-4 col-md-6 col-12 my-2">#}
 {#                                        <label class="mb-2" for="email">Email Address</label>#}
 {##}
-{#                                        <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" required="">#}
+{#                                        <input type="email" name="email" id="email" pattern="[^ @]@[^ @]" class="form-control" required="">#}
 {#                                    </div>#}
 {##}
 {#                                    <div class="col-lg-4 col-md-6 col-12 my-2">#}
@@ -552,7 +454,7 @@ https://www.tooplate.com/view/2128-tween-agency
 {#                        <form class="custom-form subscribe-form mt-4" role="form">#}
 {#                            <div class="row">#}
 {#                                <div class="col-lg-8 col-md-8 col-7">#}
-{#                                    <input type="email" name="subscribe-email" id="subscribe-email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Your email address" required="">#}
+{#                                    <input type="email" name="subscribe-email" id="subscribe-email" pattern="[^ @]@[^ @]" class="form-control" placeholder="Your email address" required="">#}
 {#                                </div>#}
 {##}
 {#                                <div class="col-lg-4 col-md-4 col-5">#}
@@ -613,6 +515,9 @@ https://www.tooplate.com/view/2128-tween-agency
 {#        </footer>#}
 
         <!-- JAVASCRIPT FILES -->
+
+
+
         <script src="static/js/jquery.min.js"></script>
         <script src="static/js/popper.js"></script>
         <script src="static/js/bootstrap.min.js"></script>
@@ -621,8 +526,13 @@ https://www.tooplate.com/view/2128-tween-agency
         <script src="static/js/magnific-popup-options.js"></script>
         <script src="static/js/click-scroll.js"></script>
         <script src="static/js/custom.js"></script>
-    </body>
-</html>
+                </div>
+            <div>
+                <!DOCTYPE html>
+
+
+
+
 <style>
      .dropdown-menu {
             background-color: rgba(255, 255, 255, 0.5); /* more transparent white background */
