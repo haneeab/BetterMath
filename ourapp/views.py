@@ -126,6 +126,9 @@ def studenttable(request):
     return render(request, 'StudentTable.html')
 
 
+def homestudent(request):
+    return render(request, 'HomePageStudent.html')
+
 def viewContent(request):
     soft = Content.objects.all()
     return render(request, 'viewContent.html', {'soft': soft})

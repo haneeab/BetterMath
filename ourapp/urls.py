@@ -29,4 +29,6 @@ urlpatterns = [
 
     path('viewContent/', views.viewContent, name='viewContent'),
 
+    path('HomePageStudent.html', views.homestudent, name='HomePageStudent'),
+
 ]
