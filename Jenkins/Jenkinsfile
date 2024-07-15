@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "better-math-django-app" // Update this to your desired Docker image name
+        DOCKER_IMAGE = "latest" // Update this to your desired Docker image name
         DOCKER_REGISTRY = "hnaeeab" // Update this to your Docker Hub username
     }
 
@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image
-                    sh 'docker build -t $DOCKER_IMAGE .'
+                    sh "docker build -t ${DOCKER_IMAGE} ."
                 }
             }
         }
