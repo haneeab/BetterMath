@@ -85,20 +85,6 @@ def AdminLogIn(request):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def homeadmin(request):
     return render(request, 'HomePageAdmin.html')
 
@@ -107,3 +93,7 @@ def TeacherTable(request):
 
 def studenttable(request):
     return render(request, 'StudentTable.html')
+
+
+def homestudent(request):
+    return render(request, 'HomePageStudent.html')
