@@ -1,30 +1,29 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login
-from .forms import UserRegisterForm, StudentProfileForm, TeacherProfileForm
-from .models import User
-
-
-
+from django.contrib.auth.models import Group
+from .forms import CreatUserForm
 
 def register_student(request):
     if request.method == 'POST':
-        user_form = UserRegisterForm(request.POST)
-        student_form = StudentProfileForm(request.POST, request.FILES)
-        if user_form.is_valid() and student_form.is_valid():
-            user = user_form.save(commit=False)
-            user.is_student = True
-            user.save()
-            student = student_form.save(commit=False)
-            student.user = user
-            student.save()
-            messages.success(request, 'Account created successfully for student!')
-            login(request, user)
-            return redirect('home')  # Redirect to a home page or student dashboard
+        form = CreatUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            try:
+                group = Group.objects.get(name='Student')
+            except ObjectDoesNotExist:
+                group = None
+            if group:
+                user.groups.add(group)
+            messages.success(request, f'Account was created for {username}')
+            return redirect('home')
     else:
-        user_form = UserRegisterForm()
-        student_form = StudentProfileForm()
-    return render(request, 'register_student.html', {'user_form': user_form, 'student_form': student_form})
+        form = CreatUserForm()
+    context = {'form': form}
+    return render(request, 'register_student.html', context)
+
 
 def register_teacher(request):
     if request.method == 'POST':
@@ -50,8 +49,8 @@ from django.http import HttpResponse
 
 def home(request):
     return render(request, 'HomePage.html')
-
-
+def teacher_mainpage (request):
+    return  render( request,'teacher_mainpage.html')
 
 
 
