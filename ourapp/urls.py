@@ -12,7 +12,7 @@ urlpatterns = [
 
     path('', views.home, name='HomePage'),
     path('AdminLogIn', views.AdminLogIn, name='AdminLogIn'),
-    path('login_teacher/', views.login_teacher),
+    path('login_teacher/', views.login_teacher,name='TeacherLogIn'),
 
     # path('register_teacher.html', views.register_teacher, name='register_teacher'),
 

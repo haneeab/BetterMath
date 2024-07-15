@@ -6,6 +6,7 @@ from django.contrib.auth.models import Group
 from .forms import CreatUserForm
 from .forms import UserRegisterForm, StudentProfileForm, TeacherProfileForm
 from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth.models import Group
 
 from .models import User
 
@@ -60,7 +61,23 @@ def teacher_mainpage (request):
     return  render( request,'teacher_mainpage.html')
 
 def login_teacher(request):
-    return render(request, 'login_teacher.html')
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            users_in_group = Group.objects.get(name='Teacher').user_set.all()
+            if user in users_in_group:
+                login(request, user)
+                return redirect('HomePage')
+            else:
+                messages.info(request, 'username OR password incorrert')
+        else:
+            messages.info(request, 'username OR password incorrert')
+    context = {}
+    return render(request, 'login_teacher.html', context)
+
+
 
 
 
