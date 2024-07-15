@@ -1,10 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+   {% load static %}
+<nav class="navbar fixed-top navbar-expand-lg">
+            <div class="container">
 
-</body>
-</html>
+                <a href="index.html" class="navbar-brand">
+                    <i class="bi-layers"></i> BetterMath
+                </a>
+
+                <a href="#" class="custom-btn btn btn-lg d-lg-none ms-auto me-4">
+                    Download
+                    <i class="bi-download ms-2"></i>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-lg-5">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Log In
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="#teacher_login">Teacher</a>
+        <a class="dropdown-item" href="{% url 'AdminLogIn' %} ">Admin</a>
+        <a class="dropdown-item" href="#student_login">Student</a>
+    </div>
+</li>
+
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link" href="#section_3">Log In</a>#}
+{#                        </li>#}
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="">Sign Up</a>
+                        </li>
+
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link" href="#section_5">Pricing</a>#}
+{#                        </li>#}
+{##}
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link" href="#section_6">Contact</a>#}
+{#                        </li>#}
+                    </ul>
+
+{#                    <div class="ms-auto d-none d-lg-block">#}
+{#                        <a href="#" class="custom-btn btn btn-lg">#}
+{#                            Download#}
+{#                            <i class="bi-download ms-2"></i>#}
+{#                        </a>#}
+{#                    </div>#}
+                </div>
+            </div>
+        </nav>
+
+
+

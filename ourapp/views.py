@@ -4,6 +4,13 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.models import Group
 from .forms import CreatUserForm
+from .forms import UserRegisterForm, StudentProfileForm, TeacherProfileForm
+from django.contrib.auth import authenticate, login,logout
+
+from .models import User
+
+
+
 
 def register_student(request):
     if request.method == 'POST':
@@ -52,6 +59,9 @@ def home(request):
 def teacher_mainpage (request):
     return  render( request,'teacher_mainpage.html')
 
+def login_teacher(request):
+    return render(request, 'login_teacher.html')
+
 
 
 
@@ -59,3 +69,16 @@ def teacher_mainpage (request):
 
 def contact(request):
     return HttpResponse('contact Page')
+
+def AdminLogIn(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('HomePage')  # Redirect to your home page or dashboard
+        else:
+            messages.error(request, 'Invalid username or password')
+    return render(request, 'AdminLogIn.html')
+

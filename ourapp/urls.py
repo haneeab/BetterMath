@@ -10,5 +10,10 @@ urlpatterns = [
     path('teacher_mainpage', views.teacher_mainpage, name='teacher_mainpage'),
     # path('register_teacher', views.register_teacher, name='register_teacher'),
 
+    path('', views.home, name='HomePage'),
+    path('AdminLogIn', views.AdminLogIn, name='AdminLogIn'),
+    path('login_teacher/', views.login_teacher),
+
+    # path('register_teacher.html', views.register_teacher, name='register_teacher'),
 
 ]
