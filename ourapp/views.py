@@ -7,7 +7,7 @@ from .forms import CreatUserForm
 from .forms import UserRegisterForm, StudentProfileForm, TeacherProfileForm
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.models import Group
-
+from  .models import Content
 from .models import User
 
 
@@ -124,3 +124,8 @@ def TeacherTable(request):
 
 def studenttable(request):
     return render(request, 'StudentTable.html')
+
+
+def viewContent(request):
+    soft = Content.objects.all()
+    return render(request, 'viewContent.html', {'soft': soft})

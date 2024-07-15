@@ -1,0 +1,135 @@
+{% load static %}
+<nav class="navbar fixed-top navbar-expand-lg custom-navbar">
+    <div class="container">
+        <a href="{% url 'HomePage' %}" class="navbar-brand" style="color: white; font-size: 35.8px;">
+            <i class="bi-layers" style="font-size: 40px"></i> BetterMath
+        </a>
+        <a href="#" class="custom-btn btn btn-lg d-lg-none ms-auto me-4" style="color: white;">
+            Download
+            <i class="bi-download ms-2"></i>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-lg-5">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'HomePage' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'HomePage' %}#section_2">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
+                        Log In
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'TeacherLogIn' %}">Teacher</a>
+                        <a class="dropdown-item" href="{% url 'AdminLogIn' %}">Admin</a>
+                        <a class="dropdown-item" href="#student_login">Student</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="" style="color: white;">Sign Up</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/viewContent.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet%}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+<link rel="stylesheet" href="{% static 'css/tooplate-tween-agency.css' %}">
+
+<!--
+
+Tooplate 2128 Tween Agency
+
+https://www.tooplate.com/view/2128-tween-agency
+
+-->
+
+
+<div class="content-wrapper">
+    {% for s in soft %}
+    <div class="product-container">
+        <div class="product-card">
+            <div class="product-image">
+                <img src="https://t3.ftcdn.net/jpg/04/83/90/18/360_F_483901821_46VsNR67uJC3xIKQN4aaxR6GtAZhx9G8.jpg" alt="Product Image">
+            </div>
+            <div class="product-details">
+                <h1>MATH</h1>
+                <p class="information">{{ s.title }}</p>
+                <br>
+                <p class="information">{{ s.uploaded_by }}</p>
+                <br>
+                <p class="information">{{ s.unit }}</p>
+                <br>
+                <p class="information">{{ s.description }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

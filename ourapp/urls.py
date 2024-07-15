@@ -27,4 +27,6 @@ urlpatterns = [
     path('TeacherTable.html', views.TeacherTable, name='TeacherTable'),
     path('StudentTable.html', views.studenttable, name='StudentTable'),
 
+    path('viewContent/', views.viewContent, name='viewContent'),
+
 ]
