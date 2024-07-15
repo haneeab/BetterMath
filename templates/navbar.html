@@ -1,9 +1,9 @@
-   {% load static %}
-<nav class="navbar fixed-top navbar-expand-lg">
+{% load static %}
+<nav class="navbar fixed-top navbar-expand-lg" style="margin-bottom: 8px">
             <div class="container">
 
-                <a href="index.html" class="navbar-brand">
-                    <i class="bi-layers"></i> BetterMath
+                <a href="{% url 'HomePage' %}" class="navbar-brand" style="font-size: 35.8px;">
+                    <i class="bi-layers" style="font-size: 40px"></i>  BetterMath
                 </a>
 
                 <a href="#" class="custom-btn btn btn-lg d-lg-none ms-auto me-4">
@@ -18,14 +18,17 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-lg-5">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Home</a>
+                            <a class="nav-link" href="{% url 'HomePage' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'HomePage' %}#section_2">About</a>
                         </li>
                         <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Log In
     </a>
     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="#teacher_login">Teacher</a>
+        <a class="dropdown-item" href="{% url 'TeacherLogIn' %}">Teacher</a>
         <a class="dropdown-item" href="{% url 'AdminLogIn' %} ">Admin</a>
         <a class="dropdown-item" href="#student_login">Student</a>
     </div>
