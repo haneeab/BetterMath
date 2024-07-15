@@ -60,3 +60,28 @@ def home(request):
 
 def contact(request):
     return HttpResponse('contact Page')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def homeadmin(request):
+    return render(request, 'HomePageAdmin.html')
+
+def TeacherTable(request):
+    return render(request, 'TeacherTable.html')
+
+def studenttable(request):
+    return render(request, 'StudentTable.html')
