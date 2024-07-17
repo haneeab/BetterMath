@@ -1,16 +1,38 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login
+from django.contrib.auth.models import User
+
 from django.contrib.auth.models import Group
-from .forms import CreatUserForm
+from .forms import CreatUserForm,ContentForm
 from .forms import UserRegisterForm, StudentProfileForm, TeacherProfileForm
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.models import Group
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseServerError, HttpResponseNotFound
+from django.forms import inlineformset_factory
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
+from .models import *
+from itertools import count, repeat,chain
 
+from django.urls import reverse_lazy
+from  .models import Content
 from .models import User
 
+from django.contrib.auth.decorators import login_required
+from .models import Content
+from .forms import ContentForm
+from django.db import IntegrityError
 
+from django.conf import settings
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+import os
 
 
 def register_student(request):
@@ -26,7 +48,7 @@ def register_student(request):
             if group:
                 user.groups.add(group)
             messages.success(request, f'Account was created for {username}')
-            return redirect('home')
+            return redirect('HomePage')
     else:
         form = CreatUserForm()
     context = {'form': form}
@@ -69,7 +91,7 @@ def login_teacher(request):
             users_in_group = Group.objects.get(name='Teacher').user_set.all()
             if user in users_in_group:
                 login(request, user)
-                return redirect('HomePage')
+                return redirect('teacher_mainpage')
             else:
                 messages.info(request, 'username OR password incorrert')
         else:
@@ -94,7 +116,7 @@ def AdminLogIn(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('HomePage')  # Redirect to your home page or dashboard
+            return redirect('HomePageAdmin')  # Redirect to your home page or dashboard
         else:
             messages.error(request, 'Invalid username or password')
     return render(request, 'AdminLogIn.html')
@@ -124,3 +146,44 @@ def TeacherTable(request):
 
 def studenttable(request):
     return render(request, 'StudentTable.html')
+
+def AddContent(request, username):
+
+    if request.method == 'POST':
+        form = ContentForm(request.POST)
+        if form.is_valid():
+            content = form.save(commit=False)
+            content.user = username  # Assign the correct User instance
+            content.save()
+            return redirect('ContentList')
+    else:
+        form = ContentForm()
+
+    return render(request, 'AddContent.html', {'form': form})
+
+# def check_database(request):
+#     db_path = os.path.join(settings.BASE_DIR, 'db.sqlite3')
+#     db_exists = os.path.exists(db_path)
+#     db_name = settings.DATABASES['default']['NAME']
+#     users = User.objects.all()
+#     user_list = ",".join([user.username for user in users])
+#     return HttpResponse(f"Users: {user_list}, DB Path: {db_path}, DB Exists: {db_exists}, DB Name: {db_name}")
+def ContentList(request,username):
+    contents = Content.objects.filter(user=username)
+    return render(request, 'ContentListTeacher.html', {'contents': contents})
+
+
+def delete_Contant(request, pk,username):
+    product = Content.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        product.delete()
+        return redirect('ContentList' ,username)
+    context = {'content': product}
+    return render(request, 'DeleteContent.html', context)
+def homestudent(request):
+    return render(request, 'HomePageStudent.html')
+
+def viewContent(request):
+    soft = Content.objects.all()
+    return render(request, 'viewContent.html', {'soft': soft})
