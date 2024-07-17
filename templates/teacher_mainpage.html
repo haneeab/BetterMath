@@ -67,7 +67,7 @@ https://www.tooplate.com/view/2128-tween-agency
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#section_2">About</a>
+                            <a class="nav-link" href="{% url 'AddContent' user.username %}">About</a>
                         </li>
 
 
@@ -155,7 +155,7 @@ border: solid 2px #0077cc00;
     </a>
                                 <br>
     <a href="">
-<button class="btn"> Add Materials</button>
+<a href="{% url 'ContentList' user.username %}" class="btn"> Add Materials</a>
     </a>
 
     </center>

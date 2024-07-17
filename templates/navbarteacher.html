@@ -1,0 +1,63 @@
+{% load static %}
+<nav class="navbar fixed-top navbar-expand-lg" style="margin-bottom: 8px;">
+    <div class="container">
+        <a href="{% url 'HomePage' %}" class="navbar-brand">
+            <i class="bi-layers" style="font-size: 40px;"></i> BetterMath
+        </a>
+
+        <a href="#" class="custom-btn btn btn-lg d-lg-none ms-auto me-4">
+            Download
+            <i class="bi-download ms-2"></i>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-lg-5">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'HomePage' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'HomePage' %}#section_2">Profile</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Log In
+                    </a>
+                    <!-- Dropdown menu if needed -->
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Sign Up</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<style>
+    /* Custom styles for navigation */
+    nav.navbar {
+        background-color: #fff; /* White background */
+    }
+
+    nav.navbar .navbar-brand {
+        font-size: 35.8px; /* Adjust font size */
+        color: #444; /* Gray text */
+        transition: color 0.3s ease; /* Smooth transition */
+        text-decoration: none; /* Remove underline */
+    }
+
+    nav.navbar .navbar-brand:hover {
+        color: #28a745; /* Green hover color */
+    }
+
+    nav.navbar .navbar-nav .nav-link {
+        color: #444; /* Gray text */
+    }
+
+    nav.navbar .navbar-nav .nav-link:hover {
+        color: #28a745; /* Green hover color */
+    }
+</style>
+
