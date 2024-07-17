@@ -48,7 +48,7 @@ def register_student(request):
             if group:
                 user.groups.add(group)
             messages.success(request, f'Account was created for {username}')
-            return redirect('home')
+            return redirect('HomePage')
     else:
         form = CreatUserForm()
     context = {'form': form}
@@ -116,7 +116,7 @@ def AdminLogIn(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('HomePage')  # Redirect to your home page or dashboard
+            return redirect('HomePageAdmin')  # Redirect to your home page or dashboard
         else:
             messages.error(request, 'Invalid username or password')
     return render(request, 'AdminLogIn.html')
@@ -155,19 +155,19 @@ def AddContent(request, username):
             content = form.save(commit=False)
             content.user = username  # Assign the correct User instance
             content.save()
-            return redirect('HomePage')
+            return redirect('ContentList')
     else:
         form = ContentForm()
 
     return render(request, 'AddContent.html', {'form': form})
 
-def check_database(request):
-    db_path = os.path.join(settings.BASE_DIR, 'db.sqlite3')
-    db_exists = os.path.exists(db_path)
-    db_name = settings.DATABASES['default']['NAME']
-    users = User.objects.all()
-    user_list = ",".join([user.username for user in users])
-    return HttpResponse(f"Users: {user_list}, DB Path: {db_path}, DB Exists: {db_exists}, DB Name: {db_name}")
+# def check_database(request):
+#     db_path = os.path.join(settings.BASE_DIR, 'db.sqlite3')
+#     db_exists = os.path.exists(db_path)
+#     db_name = settings.DATABASES['default']['NAME']
+#     users = User.objects.all()
+#     user_list = ",".join([user.username for user in users])
+#     return HttpResponse(f"Users: {user_list}, DB Path: {db_path}, DB Exists: {db_exists}, DB Name: {db_name}")
 def ContentList(request,username):
     contents = Content.objects.filter(user=username)
     return render(request, 'ContentListTeacher.html', {'contents': contents})
