@@ -21,10 +21,18 @@ from .models import *
 from itertools import count, repeat,chain
 
 from django.urls import reverse_lazy
+from  .models import Content
 from .models import User
+
 from django.contrib.auth.decorators import login_required
+from .models import Content
+from .forms import ContentForm
+from django.db import IntegrityError
 
-
+from django.conf import settings
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+import os
 
 
 def register_student(request):
@@ -139,18 +147,6 @@ def TeacherTable(request):
 def studenttable(request):
     return render(request, 'StudentTable.html')
 
-
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .models import Content
-from .forms import ContentForm
-from django.db import IntegrityError
-
-from django.conf import settings
-from django.contrib.auth.models import User
-from django.http import HttpResponse
-import os
-
 def AddContent(request, username):
 
     if request.method == 'POST':
@@ -185,3 +181,9 @@ def delete_Contant(request, pk,username):
         return redirect('ContentList' ,username)
     context = {'content': product}
     return render(request, 'DeleteContent.html', context)
+def homestudent(request):
+    return render(request, 'HomePageStudent.html')
+
+def viewContent(request):
+    soft = Content.objects.all()
+    return render(request, 'viewContent.html', {'soft': soft})

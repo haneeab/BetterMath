@@ -1,0 +1,49 @@
+body {
+    background-image: url('https://t3.ftcdn.net/jpg/04/83/90/18/360_F_483901821_46VsNR67uJC3xIKQN4aaxR6GtAZhx9G8.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    font-family: 'Karla', sans-serif;
+}
+
+.content-wrapper {
+    background-color: rgba(255, 255, 255, 0.8); /* Optional: Add a white background with some transparency to make the content more readable */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensures the container takes up at least the full viewport height */
+    padding: 20px;
+}
+
+.product-card {
+    width: 300px; /* Adjust the width as needed */
+    padding: 20px;
+    background-color: #f9f9f9; /* Background color of the card */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+    text-align: center;
+}
+
+.product-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px; /* Matches the card's border-radius */
+}
+
+.product-details {
+    margin-top: 20px;
+}
+
+.information {
+    margin: 10px 0;
+}

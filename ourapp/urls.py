@@ -24,4 +24,8 @@ urlpatterns = [
     path('ContentList/<str:username>/', views.ContentList, name='ContentList'),
     path('content/<int:pk>/<str:username>/', views.delete_Contant, name='delete_content'),
 
+    path('viewContent/', views.viewContent, name='viewContent'),
+
+    path('HomePageStudent.html', views.homestudent, name='HomePageStudent'),
+
 ]
