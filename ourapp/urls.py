@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import register_student, register_teacher ,AddContent
+from .views import register_student, register_teacher ,AddContent,logoutl
 from ourapp import views
 
 
@@ -24,7 +24,8 @@ urlpatterns = [
     path('content/<int:pk>/<str:username>/', views.delete_Contant, name='delete_content'),
 
     path('viewContent', views.viewContent, name='viewContent'),
-
+    path('addstudent', views.addstudent, name='addstudent'),
     path('HomePageStudent.html', views.homestudent, name='HomePageStudent'),
+    path('logout',views.logoutl , name='logout'),
 
 ]
