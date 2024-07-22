@@ -1,0 +1,154 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login_admin.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/list.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tooplate-tween-agency.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Add Product</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+            padding: 0 10px;
+            background: url("{% static 'images/h.png' %}") no-repeat center center/cover;
+            background-size: cover;
+            background-attachment: fixed;
+             font-family: serif;            }
+        .login-block {
+            max-width: 400px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+            margin-top: 20px;
+            border: 2px solid transparent;
+        }
+        .login-block:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            border-color: skyblue;
+        }
+        .login-block h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: black;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .login-block form {
+            margin-bottom: 0;
+        }
+        .login-block form .form-group {
+            margin-bottom: 25px;
+        }
+        .login-block form label {
+            font-weight: bold;
+            color: black;
+        }
+        .login-block form input[type="text"],
+        .login-block form input[type="number"],
+        .login-block form textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s ease-in-out;
+            background-color: #f8f9fa;
+        }
+        .login-block form input[type="text"]:focus,
+        .login-block form input[type="number"]:focus,
+        .login-block form textarea:focus {
+            border-color: skyblue;
+            background-color: #ffffff;
+        }
+        .login-block form textarea {
+            height: 180px;
+        }
+        .login-block form button {
+            background-color: skyblue;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            width: 100%;
+        }
+        .login-block form button:hover {
+            background-color: #5a6268;
+        }
+        #messages {
+            margin-top: 20px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+  {% include 'navbarteacher.html' %}
+
+  <div class="container" style="margin-left: 450px; ">
+    <div class="login-block">
+      <h2>Add Content</h2>
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.title }}
+        </div>
+        <div class="form-group">
+          {{ form.description }}
+        </div>
+        <div class="form-group">
+          {{ form.unit }}
+        </div>
+        <button type="submit">Save</button>
+      </form>
+
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var titleInput = document.getElementById('id_title');
+        var descriptionInput = document.getElementById('id_description');
+        var unitInput = document.getElementById('id_unit');
+
+        if (titleInput) {
+            titleInput.placeholder = 'Enter title...';
+            titleInput.classList.add('form-control');
+        }
+
+        if (descriptionInput) {
+            descriptionInput.placeholder = 'Enter description...';
+            descriptionInput.classList.add('form-control');
+        }
+
+        if (unitInput) {
+            unitInput.placeholder = 'Enter unit...';
+            unitInput.classList.add('form-control');
+        }
+    });
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

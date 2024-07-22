@@ -155,7 +155,7 @@ def AddContent(request, username):
             content = form.save(commit=False)
             content.user = username  # Assign the correct User instance
             content.save()
-            return redirect('ContentList')
+            return redirect('ContentList', username)
     else:
         form = ContentForm()
 
@@ -199,3 +199,15 @@ def Review_Student_list(request):
     teachers = User.objects.filter(groups=teacher_group)
 
     return render(request, 'Review_Student_list.html',{'teachers':teachers} )
+
+
+def Update_Content(request,pk,username):
+    product = Content.objects.get(pk=pk)
+    form = ContentForm(instance=product)
+    if request.method == 'POST':
+        form = ContentForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('ContentList',username)
+    context = {'form': form}
+    return render(request, 'UpdateContent.html', context)
