@@ -27,5 +27,6 @@ urlpatterns = [
     path('viewContent/', views.viewContent, name='viewContent'),
 
     path('HomePageStudent.html', views.homestudent, name='HomePageStudent'),
+    path('EditProfileStudent.html/<str:username>/', views.edit_profile, name='EditProfileStudent'),
 
 ]
