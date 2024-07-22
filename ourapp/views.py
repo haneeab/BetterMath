@@ -207,3 +207,14 @@ def addstudent(request):
 def logoutl(request):
     logout(request)
     return redirect('HomePage')
+def Review_teacher_list(request):
+    teacher_group = Group.objects.get(name='Teacher')
+    teachers = User.objects.filter(groups=teacher_group)
+
+    return render(request, 'Review_teacher_list.html',{'teachers':teachers} )
+
+def Review_Student_list(request):
+    teacher_group = Group.objects.get(name='Student')
+    teachers = User.objects.filter(groups=teacher_group)
+
+    return render(request, 'Review_Student_list.html',{'teachers':teachers} )
