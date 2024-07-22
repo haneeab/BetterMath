@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
+
+<main>
+  <div class="add-teacher">
+      <a class="btn add-btn" href="#"><i class="fas fa-plus"></i> Add Student</a>
+  </div>
+  <ol class="gradient-list">
+      {% for i in teachers %}
+      <li>
+          <div class="teacher-info">
+              <span class="teacher-name">{{ i.username }} {{ i.first_name }} {{ i.last_name }}</span>
+              <span class="teacher-email">{{ i.email }}</span>
+          </div>
+          <div class="teacher-actions">
+              <a class="btn delete-btn" href="#"><i class="fas fa-trash-alt"></i> Delete Student</a>
+              <a class="btn edit-btn" href="#"><i class="fas fa-edit"></i> Edit Student</a>
+          </div>
+      </li>
+      {% endfor %}
+  </ol>
+</main>
+</body>
+</html>
+<style>
+    /*** FONTS ***/
+/*** VARIABLES ***/
+/* Colors */
+:root {
+    --black: #1d1f20;
+    --blue: #83e4e2;
+    --green: #a2ed56;
+    --yellow: #fddc32;
+    --white: #fafafa;
+}
+
+/*** EXTEND ***/
+/* box-shadow */
+.boxshadow {
+    box-shadow: 0.25rem 0.25rem 0.6rem rgba(0, 0, 0, 0.05), 0 0.5rem 1.125rem rgba(75, 0, 0, 0.05);
+}
+
+/*** STYLE ***/
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--white);
+    color: var(--black);
+    font-family: 'Raleway', sans-serif;
+}
+
+main {
+    display: block;
+    margin: 0 auto;
+    max-width: 50rem;
+    padding: 2rem;
+}
+
+.add-teacher {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+}
+
+.add-btn {
+    background: #4caf50;
+}
+
+.add-btn:hover {
+    background: #388e3c;
+}
+
+ol.gradient-list {
+    counter-reset: gradient-counter;
+    list-style: none;
+    margin: 2rem 0;
+    padding-left: 1rem;
+}
+
+ol.gradient-list > li {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0.5rem 0.5rem 1.2rem rgba(0, 0, 0, 0.1), 0 1rem 2.25rem rgba(75, 0, 0, 0.1);
+    counter-increment: gradient-counter;
+    margin-top: 1.5rem;
+    min-height: 4rem;
+    padding: 1.5rem;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ol.gradient-list > li::before {
+    align-items: flex-end;
+    background: linear-gradient(135deg, var(--blue) 0%, var(--green) 100%);
+    border-radius: 2rem;
+    box-shadow: 0.5rem 0.5rem 1.2rem rgba(0, 0, 0, 0.1), 0 1rem 2.25rem rgba(75, 0, 0, 0.1);
+    color: var(--black);
+    content: counter(gradient-counter);
+    display: flex;
+    font: 900 2em/1 'Montserrat';
+    height: 4rem;
+    justify-content: center;
+    left: -2rem;
+    overflow: hidden;
+    padding: 0.25em 0.5em;
+    position: absolute;
+    top: -2rem;
+    width: 4rem;
+    z-index: 1;
+}
+
+.teacher-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.teacher-name {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.teacher-email {
+    font-size: 1rem;
+    color: gray;
+}
+
+.teacher-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn {
+    align-items: center;
+    background: var(--yellow);
+    border: 2px solid var(--blue);
+    border-radius: 0.5rem;
+    color: var(--black);
+    display: flex;
+    font-size: 1rem;
+    font-weight: bold;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: var(--blue);
+    color: var(--white);
+}
+
+.delete-btn {
+    background: #ff4d4d;
+}
+
+.delete-btn:hover {
+    background: #cc0000;
+}
+
+.edit-btn {
+    background: #4da6ff;
+}
+
+.edit-btn:hover {
+    background: #005ce6;
+}
+
+@media (min-width: 0) {
+    ol.gradient-list > li:nth-child(10n+1):before,
+    ol.gradient-list > li:nth-child(10n+2):before,
+    ol.gradient-list > li:nth-child(10n+3):before,
+    ol.gradient-list > li:nth-child(10n+4):before,
+    ol.gradient-list > li:nth-child(10n+5):before {
+        background: linear-gradient(135deg, rgba(162, 237, 86, 0.2) 0%, rgba(253, 220, 50, 0.2) 100%);
+    }
+    ol.gradient-list > li:nth-child(10n+6):before,
+    ol.gradient-list > li:nth-child(10n+7):before,
+    ol.gradient-list > li:nth-child(10n+8):before,
+    ol.gradient-list > li:nth-child(10n+9):before,
+    ol.gradient-list > li:nth-child(10n+10):before {
+        background: linear-gradient(135deg, rgba(162, 237, 86, 0.8) 0%, rgba(253, 220, 50, 0.8) 100%);
+    }
+}
+
+ol.gradient-list > li + li {
+    margin-top: 2.5rem;
+}
+
+</style>
