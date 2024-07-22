@@ -1,4 +1,5 @@
 from django.urls import path
+from .views import register_student, register_teacher ,AddContent,logoutl
 from .views import register_student, register_teacher ,AddContent,Review_teacher_list
 from ourapp import views
 
@@ -19,10 +20,12 @@ urlpatterns = [
     path('ContentList/<str:username>/', views.ContentList, name='ContentList'),
     path('content/<int:pk>/<str:username>/', views.delete_Contant, name='delete_content'),
     path('viewContent', views.viewContent, name='viewContent'),
+    path('addstudent', views.addstudent, name='addstudent'),
     path('HomePageStudent.html', views.homestudent, name='HomePageStudent'),
     path('Review_teacher_list', views.Review_teacher_list, name='Review_teacher_list'),
     path('Review_Student_list', views.Review_Student_list, name='Review_Student_list'),
     path('Update_Content/<int:pk>/<str:username>/', views.Update_Content, name='Update_Content'),
     path('EditProfileStudent.html/<str:username>/', views.edit_profile, name='EditProfileStudent'),
+    path('logout',views.logoutl , name='logout'),
 
 ]

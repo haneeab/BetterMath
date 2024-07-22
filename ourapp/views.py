@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login,logout
 
 from django.contrib.auth.models import Group
 from .forms import CreatUserForm,ContentForm
@@ -81,6 +82,8 @@ from django.http import HttpResponse
 
 def home(request):
     return render(request, 'HomePage.html')
+
+@login_required
 def teacher_mainpage (request):
     return  render( request,'teacher_mainpage.html')
 
@@ -190,6 +193,22 @@ def viewContent(request):
     soft = Content.objects.all()
     return render(request, 'viewContent.html', {'soft': soft})
 
+
+def addstudent(request):
+    form = CreatUserForm()
+    if request.method == 'POST':
+        form = CreatUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('HomePage')
+
+    conaxt = {'form': form}
+    return render(request, 'addstudent.html', conaxt)
+
+
+def logoutl(request):
+    logout(request)
+    return redirect('HomePage')
 def Review_teacher_list(request):
     teacher_group = Group.objects.get(name='Teacher')
     teachers = User.objects.filter(groups=teacher_group)
