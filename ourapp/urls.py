@@ -23,5 +23,6 @@ urlpatterns = [
     path('Review_teacher_list', views.Review_teacher_list, name='Review_teacher_list'),
     path('Review_Student_list', views.Review_Student_list, name='Review_Student_list'),
     path('Update_Content/<int:pk>/<str:username>/', views.Update_Content, name='Update_Content'),
+    path('EditProfileStudent.html/<str:username>/', views.edit_profile, name='EditProfileStudent'),
 
 ]

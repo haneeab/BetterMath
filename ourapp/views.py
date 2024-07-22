@@ -33,8 +33,10 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 import os
-
-
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import UserForm, ProfileForm
+from .models import Profile
 def register_student(request):
     if request.method == 'POST':
         form = CreatUserForm(request.POST)
@@ -199,6 +201,29 @@ def Review_Student_list(request):
     teachers = User.objects.filter(groups=teacher_group)
 
     return render(request, 'Review_Student_list.html',{'teachers':teachers} )
+
+
+
+def edit_profile(request,username):
+    # Get or create the profile based on the username
+    profile, created = Profile.objects.get_or_create(user=username)
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile was successfully updated!')
+            return redirect('HomePageStudent')
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=profile)
+
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form
+    }
+    return render(request, 'EditProfileStudent.html', context)
 
 
 def Update_Content(request,pk,username):
