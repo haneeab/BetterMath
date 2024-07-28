@@ -155,7 +155,7 @@ def AddContent(request, username):
             content = form.save(commit=False)
             content.user = username  # Assign the correct User instance
             content.save()
-            return redirect('ContentList')
+            return redirect('ContentList' ,username)
     else:
         form = ContentForm()
 
