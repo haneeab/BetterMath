@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login,logout
 
 from django.contrib.auth.models import Group
 from .forms import CreatUserForm,ContentForm
@@ -33,8 +34,10 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 import os
-
-
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import UserForm, ProfileForm
+from .models import Profile
 def register_student(request):
     if request.method == 'POST':
         form = CreatUserForm(request.POST)
@@ -79,6 +82,8 @@ from django.http import HttpResponse
 
 def home(request):
     return render(request, 'HomePage.html')
+
+@login_required
 def teacher_mainpage (request):
     return  render( request,'teacher_mainpage.html')
 
@@ -155,7 +160,7 @@ def AddContent(request, username):
             content = form.save(commit=False)
             content.user = username  # Assign the correct User instance
             content.save()
-            return redirect('ContentList' ,username)
+            return redirect('ContentList', username)
     else:
         form = ContentForm()
 
@@ -187,3 +192,66 @@ def homestudent(request):
 def viewContent(request):
     soft = Content.objects.all()
     return render(request, 'viewContent.html', {'soft': soft})
+
+
+def addstudent(request):
+    form = CreatUserForm()
+    if request.method == 'POST':
+        form = CreatUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('HomePage')
+
+    conaxt = {'form': form}
+    return render(request, 'addstudent.html', conaxt)
+
+
+def logoutl(request):
+    logout(request)
+    return redirect('HomePage')
+def Review_teacher_list(request):
+    teacher_group = Group.objects.get(name='Teacher')
+    teachers = User.objects.filter(groups=teacher_group)
+
+    return render(request, 'Review_teacher_list.html',{'teachers':teachers} )
+
+def Review_Student_list(request):
+    teacher_group = Group.objects.get(name='Student')
+    teachers = User.objects.filter(groups=teacher_group)
+
+    return render(request, 'Review_Student_list.html',{'teachers':teachers} )
+
+
+
+def edit_profile(request,username):
+    # Get or create the profile based on the username
+    profile, created = Profile.objects.get_or_create(user=username)
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile was successfully updated!')
+            return redirect('HomePageStudent')
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=profile)
+
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form
+    }
+    return render(request, 'EditProfileStudent.html', context)
+
+
+def Update_Content(request,pk,username):
+    product = Content.objects.get(pk=pk)
+    form = ContentForm(instance=product)
+    if request.method == 'POST':
+        form = ContentForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('ContentList',username)
+    context = {'form': form}
+    return render(request, 'UpdateContent.html', context)
