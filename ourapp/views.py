@@ -272,3 +272,23 @@ def StudentLogIn(request):
             messages.info(request, 'username OR password incorrert')
     context = {}
     return render(request, 'StudentLogIn.html', context)
+
+
+def AddTeacher(request):
+    if request.method == 'POST':
+        form = CreatUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            try:
+                group = Group.objects.get(name='Teacher')
+            except ObjectDoesNotExist:
+                group = None
+            if group:
+                user.groups.add(group)
+            messages.success(request, f'Account was created for {username}')
+            return redirect('Review_teacher_list')
+    else:
+        form = CreatUserForm()
+    context = {'form': form}
+    return render(request, 'AddTeacher.html', context)

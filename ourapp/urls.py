@@ -28,5 +28,6 @@ urlpatterns = [
     path('EditProfileStudent.html/<str:username>/', views.edit_profile, name='EditProfileStudent'),
     path('logout',views.logoutl , name='logout'),
     path('StudentLogIn',views.StudentLogIn , name='StudentLogIn'),
+    path('AddTeacher',views.AddTeacher, name='AddTeacher'),
 
 ]

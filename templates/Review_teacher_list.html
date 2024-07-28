@@ -9,7 +9,7 @@
 
 <main>
   <div class="add-teacher">
-      <a class="btn add-btn" href="#"><i class="fas fa-plus"></i> Add Teacher</a>
+      <a class="btn add-btn" href="{% url 'AddTeacher' %}"><i class="fas fa-plus"></i> Add Teacher</a>
   </div>
   <ol class="gradient-list">
       {% for i in teachers %}
