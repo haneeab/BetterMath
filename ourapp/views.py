@@ -36,7 +36,7 @@ from django.http import HttpResponse
 import os
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import UserForm, ProfileForm
+from .forms import UserForm, ProfileForm,QuizForm
 from .models import Profile
 def register_student(request):
     if request.method == 'POST':
@@ -255,3 +255,33 @@ def Update_Content(request,pk,username):
             return redirect('ContentList',username)
     context = {'form': form}
     return render(request, 'UpdateContent.html', context)
+
+
+from django.shortcuts import render, redirect
+from .forms import QuizForm
+
+def create_quiz(request):
+    if request.method == 'POST':
+        form = QuizForm(request.POST)
+        if form.is_valid():
+            form.instance.user = request.user.username
+            form.save()
+            return redirect('teacher_mainpage')
+        else:
+            print(f"Debug: form.errors = {form.errors}")  # Debug statement
+    else:
+        form = QuizForm()
+
+    return render(request, 'AddQuizTeacher.html', {'form': form})
+def combined_list_3uints(request):
+    contents = Content.objects.filter(unit=3)
+    quizzes = Quiz.objects.filter(unit=3)
+    return render(request, 'Math3Units.html', {'contents': contents, 'quizzes': quizzes})
+def combined_list_4uints(request):
+    contents = Content.objects.filter(unit=4)
+    quizzes = Quiz.objects.filter(unit=4)
+    return render(request, 'Math4Units.html', {'contents': contents, 'quizzes': quizzes})
+def combined_list_5uints(request):
+    contents = Content.objects.filter(unit=5)
+    quizzes = Quiz.objects.filter(unit=5)
+    return render(request, 'Math5Units.html', {'contents': contents, 'quizzes': quizzes})
