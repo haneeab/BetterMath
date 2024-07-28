@@ -255,3 +255,20 @@ def Update_Content(request,pk,username):
             return redirect('ContentList',username)
     context = {'form': form}
     return render(request, 'UpdateContent.html', context)
+
+def StudentLogIn(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            users_in_group = Group.objects.get(name='Student').user_set.all()
+            if user in users_in_group:
+                login(request, user)
+                return redirect('HomePageStudent')
+            else:
+                messages.info(request, 'username OR password incorrert')
+        else:
+            messages.info(request, 'username OR password incorrert')
+    context = {}
+    return render(request, 'StudentLogIn.html', context)

@@ -164,42 +164,72 @@ https://www.tooplate.com/view/2128-tween-agency
     </head>
 <body>
     <br>
-
-          {%  include 'navbar.html' %}<body>
-  <div class="wrapper" style="margin-top: 100PX">
-    <form action="" method="POST">
-      {% csrf_token %}
-      <h2 STYLE="color:white">Sign Up</h2>
-      <!-- User Registration Form Fields -->
-      <div class="input-field">
-        {{ form.first_name.label_tag }}
-        {{ form.first_name }}
-      </div>
-      <div class="input-field">
-        {{ form.last_name.label_tag }}
-        {{ form.last_name }}
-      </div>
-      <div class="input-field">
-        {{ form.username.label_tag }}
-        {{ form.username }}
-      </div>
-      <div class="input-field">
-        {{ form.email.label_tag }}
-        {{ form.email }}
-      </div>
-      <div class="input-field">
-        {{ form.password1.label_tag }}
-        {{ form.password1 }}
-      </div>
-      <div class="input-field">
-        {{ form.password2.label_tag }}
-        {{ form.password2 }}
-      </div>
-      <button type="submit">Sign Up</button>
-    </form>
-    <div class="register">
-      Already have an account? <a href="{% url 'HomePage' %}">Login</a>
+    {% include 'navbar.html' %}
+    <div class="wrapper" style="margin-top: 100px">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <h2 style="color:white">Sign Up</h2>
+            <!-- User Registration Form Fields -->
+            <div class="input-field">
+                {{ form.first_name.label_tag }}
+                {{ form.first_name }}
+            </div>
+            <div class="input-field">
+                {{ form.last_name.label_tag }}
+                {{ form.last_name }}
+            </div>
+            <div class="input-field">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+            <div class="input-field">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+            </div>
+            <div class="input-field">
+                {{ form.password1.label_tag }}
+                {{ form.password1 }}
+            </div>
+            <div class="input-field">
+                {{ form.password2.label_tag }}
+                {{ form.password2 }}
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+        <div class="register">
+            Already have an account? <a href="{% url 'HomePage' %}">Login</a>
+        </div>
     </div>
-  </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var inputs = document.querySelectorAll("input");
+
+            inputs.forEach(function(input) {
+                var placeholderText = input.getAttribute("placeholder");
+
+                input.addEventListener("focus", function() {
+                    input.setAttribute("data-placeholder", placeholderText);
+                    input.removeAttribute("placeholder");
+                });
+
+                input.addEventListener("blur", function() {
+                    if (input.value === "") {
+                        input.setAttribute("placeholder", input.getAttribute("data-placeholder"));
+                    }
+                });
+
+                input.addEventListener("input", function() {
+                    if (input.value === "") {
+                        input.setAttribute("placeholder", input.getAttribute("data-placeholder"));
+                    } else {
+                        input.removeAttribute("placeholder");
+                    }
+                });
+            });
+        });
+    </script>
 </body>
+
+
+
 </html>

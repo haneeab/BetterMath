@@ -27,5 +27,6 @@ urlpatterns = [
     path('Update_Content/<int:pk>/<str:username>/', views.Update_Content, name='Update_Content'),
     path('EditProfileStudent.html/<str:username>/', views.edit_profile, name='EditProfileStudent'),
     path('logout',views.logoutl , name='logout'),
+    path('StudentLogIn',views.StudentLogIn , name='StudentLogIn'),
 
 ]
