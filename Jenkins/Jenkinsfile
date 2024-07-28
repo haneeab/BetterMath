@@ -23,14 +23,6 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
-            steps {
-                script {
-                    // Run Django tests inside the Docker container
-                    sh 'docker run --rm $DOCKER_IMAGE python manage.py test'
-                }
-            }
-        }
 
         stage('Push Docker Image') {
             steps {
@@ -46,6 +38,14 @@ pipeline {
                 }
             }
         }
+        stage('Run Tests') {
+                    steps {
+                        script {
+                            // Run Django tests inside the Docker container
+                            sh 'docker run --rm $DOCKER_IMAGE python manage.py test'
+                    }
+                }
+            }
 
         stage('Deploy') {
             steps {
