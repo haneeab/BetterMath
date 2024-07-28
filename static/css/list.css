@@ -1,4 +1,3 @@
-/* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
@@ -13,18 +12,25 @@
 .dl-blurbs {
     display: grid;
     gap: 2vw;
+    padding-top: 100px;
 }
 
-/* Media Queries */
-@media (min-width: 768px) and (max-width: 1023px) {
-    .dl-blurbs {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+/*!* Media Queries *!*/
+/*@media (min-width: 768px) and (max-width: 1023px) {*/
+/*    .dl-blurbs {*/
+/*        grid-template-columns: repeat(2, 1fr);*/
+/*    }*/
+/*}*/
 
-@media (min-width: 1024px) {
+/*@media (min-width: 1024px) and (max-width: 1399px) {*/
+/*    .dl-blurbs {*/
+/*        grid-template-columns: repeat(3, 1fr);*/
+/*    }*/
+/*}*/
+
+@media (min-width: 1400px) {
     .dl-blurbs {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
@@ -37,8 +43,7 @@ dl {
 }
 
 dt {
-        height: 70px;
-
+    height: 70px;
     color: #4f6d7aff;
     font-size: 2em; /* Adjust font size for dt */
     text-transform: uppercase;
@@ -52,8 +57,7 @@ dt::before {
 }
 
 dd {
-            height: 140px;
-
+    height: 140px;
     margin-top: 10px; /* Adjust top margin for dd */
     margin-bottom: 10px; /* Adjust bottom margin for dd */
     line-height: 1.4; /* Adjust line height for dd */

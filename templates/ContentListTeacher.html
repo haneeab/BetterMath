@@ -12,22 +12,18 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
     <link rel="stylesheet" href="{% static 'css/tooplate-tween-agency.css' %}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
 </head>
 <body>
-
     {% include 'navbarteacher.html' %}
 
-    <section class="dl-blurbs" style="padding-top: 100px;">
+    <section class="dl-blurbs" style="padding-top: 100px; width: 2000px">
         {% for content in contents %}
-        <dl>
+        <dl style="width: 300px">
             <dt>{{ forloop.counter }}. {{ content.title }}</dt>
             <dd>{{ content.description }}</dd>
             <dd>
-
                 <a href="{% url 'Update_Content' pk=content.pk username=user.username %}" class="button-17">Edit</a>
-
                 <a href="{% url 'delete_content' pk=content.pk username=user.username %}" class="button-17">Delete</a>
             </dd>
         </dl>
@@ -35,40 +31,216 @@
     </section>
     <footer>
         <div class="add-content-button">
-        <a href="{% url 'AddContent' user.username %}" class="button-18">Add Content</a>
-    </div>
+            <a href="{% url 'AddContent' user.username %}" class="button-18">Add Content</a>
+        </div>
     </footer>
-
-
 </body>
-
 </html>
+
 <style>
    .add-content-button {
-        position: fixed; /* Position fixed relative to the viewport */
-        bottom: 20px; /* Adjust as needed */
-        left: 20px; /* Adjust as needed */
-        z-index: 999; /* Ensure it's above other content if necessary */
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 999;
     }
-     body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    width: 100%;
-    padding: 0 10px;
-    background-color:#f9fafb;
-    {#background: url("{% static 'images/h.png' %}") no-repeat center center/cover;#}
-    {#background-size:;#}
-    {#background-attachment: fixed; /* Ensures the background image stays fixed while scrolling */#}
-}
 
+    body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        width: 100%;
+        padding: 0 10px;
+        background: #f9fafb; /* Slightly darker gray background for dl */
+    }
+
+    .dl-blurbs {
+        display: grid;
+        gap: 2vw;
+        padding-top: 100px;
+
+    }
+
+    @media (min-width: 1400px) {
+        .dl-blurbs {
+            grid-template-columns: repeat(4, 1fr);
+
+        }
+    }
+
+    dl {
+        height: 300px;
+        background: #f9fafb; /* Slightly darker gray background for dl */
+        background: linear-gradient(90deg, rgba(0,0,0,0.04) 20%, rgba(255,255,255,0) 0%);
+        padding: 20px;
+        margin: 10px;
+    }
+
+    dt {
+        height: 70px;
+        color: #4f6d7aff;
+        font-size: 2em;
+        text-transform: uppercase;
+        width: 100%;
+    }
+
+    dt::before {
+        color: #5ea5b8ff;
+        margin-left: -1vw;
+        padding-right: 12px;
+    }
+
+    dd {
+        height: 140px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
+
+    .button-17 {
+        align-items: center;
+        appearance: none;
+        background-color: #fff;
+        border-radius: 24px;
+        border-style: none;
+        box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+        box-sizing: border-box;
+        color: #3c4043;
+        cursor: pointer;
+        display: inline-flex;
+        fill: currentcolor;
+        font-family: "Google Sans",Roboto,Arial,sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        height: 48px;
+        justify-content: center;
+        letter-spacing: .25px;
+        line-height: normal;
+        max-width: 100%;
+        overflow: visible;
+        padding: 2px 24px;
+        position: relative;
+        text-align: center;
+        text-transform: none;
+        transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        width: auto;
+        will-change: transform,opacity;
+        z-index: 0;
+    }
+
+    .button-17:hover {
+        background: #F6F9FE;
+        color: #174ea6;
+    }
+
+    .button-17:active {
+        box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+        outline: none;
+    }
+
+    .button-17:focus {
+        outline: none;
+        border: 2px solid #4285f4;
+    }
+
+    .button-17:not(:disabled) {
+        box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+    }
+
+    .button-17:not(:disabled):hover {
+        box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+    }
+
+    .button-17:not(:disabled):focus {
+        box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+    }
+
+    .button-17:not(:disabled):active {
+        box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+    }
+
+    .button-17:disabled {
+        box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+    }
+
+    .button-18 {
+        align-items: center;
+        appearance: none;
+        background-color: #fff;
+        border-radius: 24px;
+        border-style: none;
+        box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+        box-sizing: border-box;
+        color: #3c4043;
+        cursor: pointer;
+        display: inline-flex;
+        fill: currentcolor;
+        font-family: "Google Sans",Roboto,Arial,sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        height: 48px;
+        justify-content: center;
+        letter-spacing: .25px;
+        line-height: normal;
+        max-width: 100%;
+        overflow: visible;
+        padding: 2px 24px;
+        position: relative;
+        text-align: center;
+        text-transform: none;
+        transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        width: auto;
+        will-change: transform,opacity;
+        z-index: 0;
+    }
+
+    .button-18:hover {
+        background: #F6F9FE;
+        color: #174ea6;
+    }
+
+    .button-18:active {
+        box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+        outline: none;
+    }
+
+    .button-18:focus {
+        outline: none;
+        border: 2px solid #4285f4;
+    }
+
+    .button-18:not(:disabled) {
+        box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+    }
+
+    .button-18:not(:disabled):hover {
+        box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+    }
+
+    .button-18:not(:disabled):focus {
+        box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+    }
+
+    .button-18:not(:disabled):active {
+        box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+    }
+
+    .button-18:disabled {
+        box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+    }
 </style>
-<script src="static/js/jquery.min.js"></script>
-        <script src="static/js/popper.js"></script>
-        <script src="static/js/bootstrap.min.js"></script>
-        <script src="static/js/jquery.backstretch.min.js"></script>
-        <script src="static/js/jquery.magnific-popup.min.js"></script>
-        <script src="static/js/magnific-popup-options.js"></script>
-        <script src="static/js/click-scroll.js"></script>
-        <script src="static/js/custom.js"></script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/popper.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'js/magnific-popup-options.js' %}"></script>
+<script src="{% static 'js/click-scroll.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
