@@ -322,3 +322,20 @@ def combined_list_5uints(request):
     contents = Content.objects.filter(unit=5)
     quizzes = Quiz.objects.filter(unit=5)
     return render(request, 'Math5Units.html', {'contents': contents, 'quizzes': quizzes})
+
+def DeleteStudent(request, username):
+    student  = User.objects.get(username=username)
+    if request.method == 'POST':
+        student.delete()
+        return redirect('Review_Student_list')
+    context = {'student': student}
+    return render(request, 'DeleteStudent.html', context)
+
+def delete_Contant(request, pk,username):
+    product = Content.objects.get(pk=pk)
+
+    if request.method == 'POST':
+        product.delete()
+        return redirect('ContentList' ,username)
+    context = {'content': product}
+    return render(request, 'DeleteContent.html', context)
