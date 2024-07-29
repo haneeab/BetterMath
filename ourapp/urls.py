@@ -33,5 +33,6 @@ urlpatterns = [
     path('combined_list5', views.combined_list_5uints, name='combined_list5'),
     path('StudentLogIn',views.StudentLogIn , name='StudentLogIn'),
     path('AddTeacher',views.AddTeacher, name='AddTeacher'),
+    path('EditProfileT.html/<str:username>/', views.edit_profile_Teacher, name='EditProfileTeacher'),
 
 ]
