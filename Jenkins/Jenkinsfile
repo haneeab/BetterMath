@@ -7,19 +7,23 @@ pipeline {
     }
 
     stages {
+        stage('Build Docker Image') {
+                steps {
+                    script {
+                        // Build the Docker image
+                        sh "docker build -t ${DOCKER_IMAGE} ."
+                    }
+                }
+                steps {
+		            withEnv(["HOME=${env.WORKSPACE}"]) {
+		               sh 'pip install -r requirements.txt'
+					}
+			}
+            }
         stage('Checkout') {
             steps {
                 // Checkout your source code repository
                 git 'https://github.com/haneeab/BetterMath.git'
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    // Build the Docker image
-                    sh "docker build -t ${DOCKER_IMAGE} ."
-                }
             }
         }
 
@@ -37,15 +41,14 @@ pipeline {
                 }
             }
         }
-
         stage('Run Tests') {
-            steps {
-                script {
-                    // Run Django tests inside the Docker container
-                    sh 'docker run --rm $DOCKER_IMAGE python manage.py test'
+                    steps {
+                        script {
+                            // Run Django tests inside the Docker container
+                            sh 'docker run --rm $DOCKER_IMAGE python manage.py test'
+                    }
                 }
             }
-        }
 
         stage('Deploy') {
             steps {
@@ -71,12 +74,6 @@ pipeline {
         }
         failure {
             echo 'Build or deployment failed!'
-            script {
-                // Capture additional debug information
-                sh 'docker ps -a'
-                sh 'docker images'
-                sh 'docker logs <container-id>' // Replace <container-id> with the actual container ID if needed
-            }
         }
     }
 }
