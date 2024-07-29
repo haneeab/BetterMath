@@ -224,3 +224,23 @@ def edit_profile(request,username):
         'profile_form': profile_form
     }
     return render(request, 'EditProfileStudent.html', context)
+def edit_profile_Teacher(request,username):
+    # Get or create the profile based on the username
+    profile, created = Profile.objects.get_or_create(user=username)
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile was successfully updated!')
+            return redirect('teacher_mainpage')
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=profile)
+
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form
+    }
+    return render(request, 'EditProfileTeacher.html', context)

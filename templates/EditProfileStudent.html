@@ -1,11 +1,251 @@
-<!-- edit_profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: slategrey;
+        }
+        .container {
+            margin-top: 50px;
+        }
+          h2 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            color: black;
+        }
+          label {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            color: dimgray;
+        }
+        .card {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+        .form-label {
+            font-we{% load static %}
 
-{% block content %}
-<h2>Edit Profile</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ user_form.as_p }}
-    {{ profile_form.as_p }}
-    <button type="submit">Save changes</button>
-</form>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="{% static 'css/labeltextedit.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet"> <!-- Your updated CSS file -->
+    <style>
+        /* Insert updated CSS styles here */
+        .profile-card {
+            padding: 30px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            margin-top: 100px; /* Adjust margin to move the box lower */
+        }
+        .profile-card h2 {
+            color: white; /* Change the color of the heading text */
+        }
+        .custom-form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #4b4b4b;
+            color: #ffffff;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            padding: 10px 15px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        .custom-form-control::placeholder {
+            color: #dddddd;
+        }
+        .custom-form-control:focus {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #28a745;
+            outline: none;
+            box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+        }
+        .btn-custom {
+            background-color: #28a745;
+            color: #ffffff;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 10px;
+            padding: 10px 15px;
+        }
+        .btn-custom:hover {
+            background-color: #218838;
+            color: #ffffff;
+        }
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Space between elements */
+            position: relative;
+            color: white;
+        }
+        .profile-container .label-text {
+            font-size: 15px;
+            padding-left: 10px;
+            position: absolute;
+            top: 13px;
+            transition: 0.3s;
+            pointer-events: none;
+        }
+        .profile-input {
+            width: 100%;
+            height: 45px;
+            border: none;
+            outline: none;
+            padding: 0 15px;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 15px;
+            background-color: transparent;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.3),
+                        -1px -1px 6px rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+        .profile-input:focus {
+            border: 2px solid transparent;
+            color: #fff;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.3),
+                        -1px -1px 6px rgba(255, 255, 255, 0.4),
+                        inset 3px 3px 10px rgba(0,0,0,0.3),
+                        inset -1px -1px 6px rgba(255, 255, 255, 0.4);
+        }
+        .profile-container .profile-input:valid ~ .label-text,
+        .profile-container .profile-input:focus ~ .label-text {
+            padding-left: 5px;
+            transform: translateY(-35px);
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbarteacher.html' %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="profile-card text-center">
+                    <h2>Edit Profile</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="profile-container">
+                            <div class="labetextedit">
+                                <input type="text" name="first_name" class="profile-input" required>
+                                <label class="label-text">FIRST NAME</label>
+                            </div>
+                            <div class="labetextedit">
+                                <input type="text" name="last_name" class="profile-input" required>
+                                <label class="label-text">LAST NAME</label>
+                            </div>
+                            <div class="labetextedit">
+                                <input type="email" name="email" class="profile-input" required>
+                                <label class="label-text">EMAIL</label>
+                            </div>
+                            <div class="labetextedit">
+                                <input type="text" name="bio" class="profile-input" required>
+                                <label class="label-text">BIO</label>
+                            </div>
+                            <div class="labetextedit">
+                                <input type="text" name="location" class="profile-input" required>
+                                <label class="label-text">LOCATION</label>
+                            </div>
+                            <div class="labetextedit">
+                                <input type="date" name="birth_date" class="profile-input" required>
+                                <label class="label-text">BIRTH DATE</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-custom btn-block">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/magnific-popup-options.js' %}"></script>
+    <script src="{% static 'js/click-scroll.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>
+ight: bold;
+        }
+        .form-h2 {
+            font-weight: bold;
+        }
+        .form-control {
+            margin-bottom: 15px;
+        }
+        .btn-custom {
+            background-color: black;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+            color: dimgrey;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+
+                    <h2 class="text-center">Edit Profile</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_first_name" class="form-label">First Name</label>
+                            {{ user_form.first_name }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_last_name" class="form-label">Last Name</label>
+                            {{ user_form.last_name }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_email" class="form-label">Email</label>
+                            {{ user_form.email }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_bio" class="form-label">Bio</label>
+                            {{ profile_form.bio }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_location" class="form-label">Location</label>
+                            {{ profile_form.location }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_birth_date" class="form-label">Birth Date</label>
+                            {{ profile_form.birth_date }}
+                        </div>
+                        <button type="submit" class="btn btn-custom btn-block">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
