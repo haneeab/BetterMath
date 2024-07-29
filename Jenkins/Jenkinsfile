@@ -23,7 +23,6 @@ pipeline {
             }
         }
 
-
         stage('Push Docker Image') {
             steps {
                 script {
@@ -38,14 +37,15 @@ pipeline {
                 }
             }
         }
+
         stage('Run Tests') {
-                    steps {
-                        script {
-                            // Run Django tests inside the Docker container
-                            sh 'docker run --rm $DOCKER_IMAGE python manage.py test'
-                    }
+            steps {
+                script {
+                    // Run Django tests inside the Docker container
+                    sh 'docker run --rm $DOCKER_IMAGE python manage.py test'
                 }
             }
+        }
 
         stage('Deploy') {
             steps {
@@ -71,6 +71,12 @@ pipeline {
         }
         failure {
             echo 'Build or deployment failed!'
+            script {
+                // Capture additional debug information
+                sh 'docker ps -a'
+                sh 'docker images'
+                sh 'docker logs <container-id>' // Replace <container-id> with the actual container ID if needed
+            }
         }
     }
 }
