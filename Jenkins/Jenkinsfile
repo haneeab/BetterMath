@@ -7,7 +7,14 @@ pipeline {
     }
 
     stages {
-    stage('Build Docker Image') {
+        stage('Checkout') {
+            steps {
+                // Checkout your source code repository
+                git 'https://github.com/haneeab/BetterMath.git'
+            }
+        }
+
+        stage('Build Docker Image') {
             steps {
                 script {
                     // Build the Docker image
@@ -15,12 +22,8 @@ pipeline {
                 }
             }
         }
-        stage('Checkout') {
-            steps {
-                // Checkout your source code repository
-                git 'https://github.com/haneeab/BetterMath.git'
-            }
-        }
+
+
         stage('Push Docker Image') {
             steps {
                 script {
