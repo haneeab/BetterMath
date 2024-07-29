@@ -50,7 +50,7 @@ def register_student(request):
                 group = None
             if group:
                 user.groups.add(group)
-            messages.success(request, f'Account was created for {username}')
+            messages.success(request, 'Account was created for {username}')
             return redirect('HomePage')
     else:
         form = CreatUserForm()
@@ -85,7 +85,7 @@ def home(request):
 
 @login_required
 def teacher_mainpage (request):
-    return  render( request,'teacher_mainpage.html')
+    return render(request,'teacher_mainpage.html')
 
 def login_teacher(request):
     if request.method == 'POST':
@@ -104,13 +104,6 @@ def login_teacher(request):
     context = {}
     return render(request, 'login_teacher.html', context)
 
-
-
-
-
-
-
-
 def contact(request):
     return HttpResponse('contact Page')
 
@@ -126,23 +119,6 @@ def AdminLogIn(request):
             messages.error(request, 'Invalid username or password')
     return render(request, 'AdminLogIn.html')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def homeadmin(request):
     return render(request, 'HomePageAdmin.html')
 
@@ -152,19 +128,28 @@ def TeacherTable(request):
 def studenttable(request):
     return render(request, 'StudentTable.html')
 
-def AddContent(request, username):
+from django.shortcuts import render, redirect
+from .forms import ContentForm
+from .models import User
 
+def AddContent(request, username):
+    error_message = None
     if request.method == 'POST':
         form = ContentForm(request.POST)
         if form.is_valid():
-            content = form.save(commit=False)
-            content.user = username  # Assign the correct User instance
-            content.save()
-            return redirect('ContentList', username)
+            unit = form.cleaned_data.get('unit')
+            if unit not in [3, 4, 5]:
+                error_message = "Unit must be 3, 4, or 5."
+            else:
+                content = form.save(commit=False)
+                content.user = username  # Correct User instance assignment
+                content.save()
+                return redirect('ContentList', username)
     else:
         form = ContentForm()
 
-    return render(request, 'AddContent.html', {'form': form})
+    return render(request, 'AddContent.html', {'form': form, 'error_message': error_message})
+
 
 # def check_database(request):
 #     db_path = os.path.join(settings.BASE_DIR, 'db.sqlite3')
@@ -176,7 +161,6 @@ def AddContent(request, username):
 def ContentList(request,username):
     contents = Content.objects.filter(user=username)
     return render(request, 'ContentListTeacher.html', {'contents': contents})
-
 
 def delete_Contant(request, pk,username):
     product = Content.objects.get(pk=pk)
@@ -209,17 +193,22 @@ def addstudent(request):
 def logoutl(request):
     logout(request)
     return redirect('HomePage')
+
 def Review_teacher_list(request):
+    users_in_group = Group.objects.get(name='Teacher').user_set.all()
+
     teacher_group = Group.objects.get(name='Teacher')
     teachers = User.objects.filter(groups=teacher_group)
-
-    return render(request, 'Review_teacher_list.html',{'teachers':teachers} )
+    context = {'users_in_group': users_in_group}
+    return render(request, 'Review_teacher_list.html', {'users_in_group': users_in_group})
 
 def Review_Student_list(request):
+    users_in_group = Group.objects.get(name='Student').user_set.all()
+
     teacher_group = Group.objects.get(name='Student')
     teachers = User.objects.filter(groups=teacher_group)
 
-    return render(request, 'Review_Student_list.html',{'teachers':teachers} )
+    return render(request, 'Review_Student_list.html', {'users_in_group': users_in_group})
 
 
 
@@ -243,18 +232,44 @@ def edit_profile(request,username):
         'profile_form': profile_form
     }
     return render(request, 'EditProfileStudent.html', context)
-
-
-def Update_Content(request,pk,username):
-    product = Content.objects.get(pk=pk)
-    form = ContentForm(instance=product)
+def edit_profile_Teacher(request,username):
+    # Get or create the profile based on the username
+    profile, created = Profile.objects.get_or_create(user=username)
     if request.method == 'POST':
-        form = ContentForm(request.POST, instance=product)
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, instance=profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile was successfully updated!')
+            return redirect('teacher_mainpage')
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=profile)
+
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form
+    }
+    return render(request, 'EditProfileTeacher.html', context)
+
+
+def Update_Content(request, pk, username):
+    content = Content.objects.get(pk=pk)
+    error_message = None
+    if request.method == 'POST':
+        form = ContentForm(request.POST, instance=content)
         if form.is_valid():
-            form.save()
-            return redirect('ContentList',username)
-    context = {'form': form}
-    return render(request, 'UpdateContent.html', context)
+            unit = form.cleaned_data.get('unit')
+            if unit not in [3, 4, 5]:
+                error_message = "Unit must be 3, 4, or 5."
+            else:
+                form.save()
+                return redirect('ContentList', username)
+    else:
+        form = ContentForm(instance=content)
+
+    return render(request, 'UpdateContent.html', {'form': form, 'error_message': error_message})
 
 def StudentLogIn(request):
     if request.method == 'POST':
@@ -286,7 +301,7 @@ def AddTeacher(request):
                 group = None
             if group:
                 user.groups.add(group)
-            messages.success(request, f'Account was created for {username}')
+            messages.success(request, 'Account was created for' ,{username})
             return redirect('Review_teacher_list')
     else:
         form = CreatUserForm()
@@ -305,7 +320,7 @@ def create_quiz(request):
             form.save()
             return redirect('teacher_mainpage')
         else:
-            print(f"Debug: form.errors = {form.errors}")  # Debug statement
+            print("Debug: form.errors =", {form.errors})  # Debug statement
     else:
         form = QuizForm()
 
