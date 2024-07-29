@@ -31,5 +31,7 @@ urlpatterns = [
     path('combined_list3', views.combined_list_3uints, name='combined_list3'),
     path('combined_list4', views.combined_list_4uints, name='combined_list4'),
     path('combined_list5', views.combined_list_5uints, name='combined_list5'),
+    path('StudentLogIn',views.StudentLogIn , name='StudentLogIn'),
+    path('AddTeacher',views.AddTeacher, name='AddTeacher'),
 
 ]
