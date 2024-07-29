@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login,logout
 
 from django.contrib.auth.models import Group
 from .forms import CreatUserForm,ContentForm
@@ -35,7 +36,7 @@ from django.http import HttpResponse
 import os
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import UserForm, ProfileForm
+from .forms import UserForm, ProfileForm,QuizForm
 from .models import Profile
 def register_student(request):
     if request.method == 'POST':
@@ -49,7 +50,7 @@ def register_student(request):
                 group = None
             if group:
                 user.groups.add(group)
-            messages.success(request, f'Account was created for {username}')
+            messages.success(request, 'Account was created for {username}')
             return redirect('HomePage')
     else:
         form = CreatUserForm()
@@ -81,6 +82,8 @@ from django.http import HttpResponse
 
 def home(request):
     return render(request, 'HomePage.html')
+
+@login_required
 def teacher_mainpage (request):
     return  render( request,'teacher_mainpage.html')
 
@@ -149,19 +152,28 @@ def TeacherTable(request):
 def studenttable(request):
     return render(request, 'StudentTable.html')
 
-def AddContent(request, username):
+from django.shortcuts import render, redirect
+from .forms import ContentForm
+from .models import User
 
+def AddContent(request, username):
+    error_message = None
     if request.method == 'POST':
         form = ContentForm(request.POST)
         if form.is_valid():
-            content = form.save(commit=False)
-            content.user = username  # Assign the correct User instance
-            content.save()
-            return redirect('ContentList')
+            unit = form.cleaned_data.get('unit')
+            if unit not in [3, 4, 5]:
+                error_message = "Unit must be 3, 4, or 5."
+            else:
+                content = form.save(commit=False)
+                content.user = username  # Correct User instance assignment
+                content.save()
+                return redirect('ContentList', username)
     else:
         form = ContentForm()
 
-    return render(request, 'AddContent.html', {'form': form})
+    return render(request, 'AddContent.html', {'form': form, 'error_message': error_message})
+
 
 # def check_database(request):
 #     db_path = os.path.join(settings.BASE_DIR, 'db.sqlite3')
@@ -190,6 +202,22 @@ def viewContent(request):
     soft = Content.objects.all()
     return render(request, 'viewContent.html', {'soft': soft})
 
+
+def addstudent(request):
+    form = CreatUserForm()
+    if request.method == 'POST':
+        form = CreatUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('HomePage')
+
+    conaxt = {'form': form}
+    return render(request, 'addstudent.html', conaxt)
+
+
+def logoutl(request):
+    logout(request)
+    return redirect('HomePage')
 def Review_teacher_list(request):
     teacher_group = Group.objects.get(name='Teacher')
     teachers = User.objects.filter(groups=teacher_group)
@@ -244,3 +272,88 @@ def edit_profile_Teacher(request,username):
         'profile_form': profile_form
     }
     return render(request, 'EditProfileTeacher.html', context)
+
+
+def Update_Content(request, pk, username):
+    content = Content.objects.get(pk=pk)
+    error_message = None
+    if request.method == 'POST':
+        form = ContentForm(request.POST, instance=content)
+        if form.is_valid():
+            unit = form.cleaned_data.get('unit')
+            if unit not in [3, 4, 5]:
+                error_message = "Unit must be 3, 4, or 5."
+            else:
+                form.save()
+                return redirect('ContentList', username)
+    else:
+        form = ContentForm(instance=content)
+
+    return render(request, 'UpdateContent.html', {'form': form, 'error_message': error_message})
+
+def StudentLogIn(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            users_in_group = Group.objects.get(name='Student').user_set.all()
+            if user in users_in_group:
+                login(request, user)
+                return redirect('HomePageStudent')
+            else:
+                messages.info(request, 'username OR password incorrert')
+        else:
+            messages.info(request, 'username OR password incorrert')
+    context = {}
+    return render(request, 'StudentLogIn.html', context)
+
+
+def AddTeacher(request):
+    if request.method == 'POST':
+        form = CreatUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            try:
+                group = Group.objects.get(name='Teacher')
+            except ObjectDoesNotExist:
+                group = None
+            if group:
+                user.groups.add(group)
+            messages.success(request, 'Account was created for' ,{username})
+            return redirect('Review_teacher_list')
+    else:
+        form = CreatUserForm()
+    context = {'form': form}
+    return render(request, 'AddTeacher.html', context)
+
+
+from django.shortcuts import render, redirect
+from .forms import QuizForm
+
+def create_quiz(request):
+    if request.method == 'POST':
+        form = QuizForm(request.POST)
+        if form.is_valid():
+            form.instance.user = request.user.username
+            form.save()
+            return redirect('teacher_mainpage')
+        else:
+            print("Debug: form.errors =", {form.errors})  # Debug statement
+    else:
+        form = QuizForm()
+
+    return render(request, 'AddQuizTeacher.html', {'form': form})
+def combined_list_3uints(request):
+    contents = Content.objects.filter(unit=3)
+    quizzes = Quiz.objects.filter(unit=3)
+    return render(request, 'Math3Units.html', {'contents': contents, 'quizzes': quizzes})
+def combined_list_4uints(request):
+    contents = Content.objects.filter(unit=4)
+    quizzes = Quiz.objects.filter(unit=4)
+    return render(request, 'Math4Units.html', {'contents': contents, 'quizzes': quizzes})
+def combined_list_5uints(request):
+    contents = Content.objects.filter(unit=5)
+    quizzes = Quiz.objects.filter(unit=5)
+    return render(request, 'Math5Units.html', {'contents': contents, 'quizzes': quizzes})

@@ -4,7 +4,7 @@
   {% load static %}
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign Up</title>
+  <title> Add Teacher </title>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@200;300;400;500;600;700&display=swap");
 
@@ -158,11 +158,11 @@ https://www.tooplate.com/view/2128-tween-agency
 </head>
 <body>
   <br>
-  {% include 'navbar.html' %}
+  {% include 'navbarAdmin.html' %}
   <div class="wrapper" style="margin-top: 100px">
     <form action="" method="POST">
       {% csrf_token %}
-      <h2 style="color:white">Sign Up</h2>
+      <h2 style="color:white">Add Teacher</h2>
       <!-- User Registration Form Fields -->
       <div class="input-field">
         {{ form.first_name }}
@@ -200,12 +200,8 @@ https://www.tooplate.com/view/2128-tween-agency
           <div style="color: white">{{ form.password2.errors }}</div>
         {% endif %}
       </div>
-      <button type="submit">Sign Up</button>
+      <button type="submit">Add Teacher</button>
     </form>
-
-    <div class="register">
-      Already have an account? <a href="{% url 'HomePage' %}">Login</a>
-    </div>
   </div>
 
 </body>
@@ -220,5 +216,5 @@ https://www.tooplate.com/view/2128-tween-agency
     form_fields[6].placeholder='Re-enter password...';
     for (var field in form_fields){
         form_fields[field].className += ' form-control';
-    }
+    }
 </script>

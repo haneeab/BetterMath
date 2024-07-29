@@ -1,7 +1,7 @@
 {% load static %}
 <nav class="navbar fixed-top navbar-expand-lg" style="margin-bottom: 8px;">
     <div class="container">
-        <a href="{% url 'teacher_mainpage' %}" class="navbar-brand">
+        <a href="{% url 'HomePageAdmin' %}" class="navbar-brand">
             <i class="bi-layers" style="font-size: 40px;"></i> BetterMath
         </a>
 
@@ -17,10 +17,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-lg-5">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'teacher_mainpage' %}">Home</a>
+                    <a class="nav-link" href="{% url 'HomePageAdmin' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'teacher_mainpage' %}#section_2">Profile</a>
+                    <a class="nav-link" href="{% url 'HomePageAdmin' %}#section_2">Profile</a>
                 </li>
 
                 <button class="button-23" style="margin-LEFT: 700px"   href="{% url 'logout' %}"  >
@@ -37,7 +37,7 @@
 <style>
     /* Custom styles for navigation */
     nav.navbar {
-                     background-color: rgba(255, 255, 255, 0.3); /* Slightly transparent background */
+        {#background-color: #fff; /* White background */#}
     }
 
     nav.navbar .navbar-brand {
