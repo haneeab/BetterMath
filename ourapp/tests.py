@@ -1,174 +1,293 @@
-from django.test import TestCase,Client
+from django.test import TestCase
+from .models import Content, Profile, Quiz
+from django.contrib.auth.models import User
+import json
 
-# Create your tests here.
-from django.test import SimpleTestCase
-from django.urls import reverse, resolve
-from ourapp.views import register_student, home, teacher_mainpage, login_teacher, AdminLogIn, homeadmin, TeacherTable, studenttable, AddContent, ContentList, delete_Contant, homestudent, viewContent
-from django.contrib.auth.models import User, Group
-from ourapp.models import Content
-from ourapp.forms import CreatUserForm, ContentForm
-from ourapp.urls import path
-
-class TestUrls(SimpleTestCase):
-
-    def test_register_student_url_resolves(self):
-        url = reverse('register_student')
-        self.assertEqual(resolve(url).func, register_student)
-
-    def test_home_url_resolves(self):
-        url = reverse('HomePage')
-        self.assertEqual(resolve(url).func, home)
-
-    def test_teacher_mainpage_url_resolves(self):
-        url = reverse('teacher_mainpage')
-        self.assertEqual(resolve(url).func, teacher_mainpage)
-
-    def test_login_teacher_url_resolves(self):
-        url = reverse('TeacherLogIn')
-        self.assertEqual(resolve(url).func, login_teacher)
-
-    def test_admin_login_url_resolves(self):
-        url = reverse('AdminLogIn')
-        self.assertEqual(resolve(url).func, AdminLogIn)
-
-    # Add other URL tests similarly
-from django.test import TestCase, Client
-from django.urls import reverse
-from django.contrib.auth.models import User, Group
-from ourapp.models import Content
-from ourapp.forms import CreatUserForm, UserRegisterForm, TeacherProfileForm, ContentForm
-
-class TestViews(TestCase):
-
+class ContentModelTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        Content.objects.create(title="Test Content", description="Test Description", user="Test User", unit=1)
 
-        self.client = Client()
-        self.register_student_url = reverse('register_student')
-        self.home_url = reverse('HomePage')
-        self.teacher_mainpage_url = reverse('teacher_mainpage')
-        self.login_teacher_url = reverse('TeacherLogIn')
-        self.admin_login_url = reverse('AdminLogIn')
-        self.homeadmin_url = reverse('HomePageAdmin')
-        self.teachertable_url = reverse('TeacherTable')
-        self.studenttable_url = reverse('StudentTable')
-        self.view_content_url = reverse('viewContent')
-        self.homestudent_url = reverse('HomePageStudent')
+    def test_content_creation(self):
+        content = Content.objects.get(title="Test Content")
+        self.assertEqual(content.description, "Test Description")
+        self.assertEqual(content.user, "Test User")
+        self.assertEqual(content.unit, 1)
 
-        self.teacher_group = Group.objects.create(name='Teacher')
-        self.student_group = Group.objects.create(name='Student')
+class ProfileModelTest(TestCase):
+    def setUp(self):
+        Profile.objects.create(user="Test User", bio="Test Bio", location="Test Location", birth_date="2000-01-01")
 
-    def test_register_student_GET(self):
-        response = self.client.get(self.register_student_url)
+    def test_profile_creation(self):
+        profile = Profile.objects.get(user="Test User")
+        self.assertEqual(profile.bio, "Test Bio")
+        self.assertEqual(profile.location, "Test Location")
+        self.assertEqual(profile.birth_date.strftime('%Y-%m-%d'), "2000-01-01")
+
+class QuizModelTest(TestCase):
+    def setUp(self):
+        questions = [{"question": "Test Question", "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False}, {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]}]
+        Quiz.objects.create(unit=1, name="Test Quiz", user="Test User", questions=questions)
+
+    def test_quiz_creation(self):
+        quiz = Quiz.objects.get(name="Test Quiz")
+        self.assertEqual(quiz.unit, 1)
+        self.assertEqual(quiz.user, "Test User")
+        self.assertEqual(len(quiz.questions), 1)
+        self.assertEqual(quiz.questions[0]['question'], "Test Question")
+from django.test import TestCase
+from .forms import CreatUserForm, StudentProfileForm, TeacherProfileForm, ContentForm, ProfileForm, QuizForm
+
+class UserRegisterFormTest(TestCase):
+    def test_valid_form(self):
+        form_data = {'first_name': 'fname', 'last_name': 'lname','username': 'testuser', 'email': 'testuser@gmail.com', 'password1': 'password123@', 'password2': 'password123@'}
+        form = CreatUserForm(data=form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_invalid_form(self):
+        form_data = {'username': 'testuser', 'email': 'testuser@example.com', 'password1': 'password123', 'password2': 'password321'}
+        form = CreatUserForm(data=form_data)
+        self.assertFalse(form.is_valid())
+
+class QuizFormTest(TestCase):
+    def test_valid_form(self):
+        questions = [{"question": "Test Question", "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False}, {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]},
+                     {"question": "Test Question", "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False}, {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]},
+                     {"question": "Test Question", "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False}, {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]},
+                     {"question": "Test Question", "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False}, {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]},
+                     {"question": "Test Question", "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False}, {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]},
+                     {"question": "Test Question", "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False}, {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]},
+                     {"question": "Test Question", "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False}, {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]},
+                     {"question": "Test Question", "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False}, {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]},
+                     {"question": "Test Question", "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False}, {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]},
+                     {"question": "Test Question", "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False}, {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]}]
+        form_data = {'unit': 3, 'name': 'Test Quiz', 'user': 'Test User', 'questions': json.dumps(questions)}
+        form = QuizForm(data=form_data)
+        self.assertTrue(form.is_valid())
+
+    def test_invalid_form(self):
+        questions = [{"question": "Test Question", "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False}]}]  # Invalid because options are less than 4
+        form_data = {'unit': 1, 'name': 'Test Quiz', 'user': 'Test User', 'questions': json.dumps(questions)}
+        form = QuizForm(data=form_data)
+        self.assertFalse(form.is_valid())
+from django.test import TestCase
+from django.urls import reverse
+from django.contrib.auth.models import User
+from .models import Content, Profile, Quiz
+
+class RegisterStudentViewTest(TestCase):
+    def test_register_student_view(self):
+        response = self.client.get(reverse('register_student'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'register_student.html')
 
-    def test_register_student_POST(self):
-        response = self.client.post(self.register_student_url, {
-            'username': 'teststudent',
-            'first_name': 'first_name1',
-            'last_name': 'last_name1',
+class HomePageViewTest(TestCase):
+    def test_home_page_view(self):
+        response = self.client.get(reverse('HomePage'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'HomePage.html')
 
-            'password1': 'password123',
-            'password2': 'password123',
+class AddContentViewTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username='testuser', password='password123')
+
+    def test_add_content_view(self):
+        self.client.login(username='testuser', password='password123')
+        response = self.client.get(reverse('AddContent', kwargs={'username': self.user.username}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'AddContent.html')
+
+
+from django.test import TestCase, Client
+from django.urls import reverse
+from django.contrib.auth.models import User, Group
+from .models import Content, Profile, Quiz
+from .forms import CreatUserForm, ContentForm, UserRegisterForm, TeacherProfileForm, QuizForm
+
+
+class ViewTests(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.student_group = Group.objects.create(name='Student')
+        self.teacher_group = Group.objects.create(name='Teacher')
+        self.admin_group = Group.objects.create(name='Admin')
+        self.student_user = User.objects.create_user(username='student', password='test123')
+        self.teacher_user = User.objects.create_user(username='teacher', password='test123')
+        self.admin_user = User.objects.create_superuser(username='admin', password='test123')
+        self.student_user.groups.add(self.student_group)
+        self.teacher_user.groups.add(self.teacher_group)
+
+        self.content = Content.objects.create(
+            title='Sample Content', description='This is a sample content.', user='teacher', unit=3
+        )
+        self.profile = Profile.objects.create(
+            user='student', bio='This is a bio.', location='Location', birth_date='2000-01-01'
+        )
+        self.quiz = Quiz.objects.create(
+            unit=3, name='Sample Quiz', user='teacher', questions='[]'
+        )
+
+    def test_register_student(self):
+        response = self.client.post(reverse('register_student'), {
+            'username': 'newstudent', 'password1': 'testpass123', 'password2': 'testpass123',
             'email': 'student@test.com'
         })
-        self.assertEqual(response.status_code, 200)
-        # self.assertRedirects(response, self.home_url)
-        # self.assertTrue(User.objects.filter(username='teststudent').exists()
-    def test_home_GET(self):
-        response = self.client.get(self.home_url)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'HomePage.html')
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(User.objects.filter(username='newstudent').exists())
 
-    def test_homeadmin_GET(self):
-        response = self.client.get(self.home_url)
+
+    def test_home(self):
+        response = self.client.get(reverse('HomePage'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'HomePage.html')
 
-    # def test_teacher_mainpage_GET(self):
-    #
-    #     response = self.client.get(self.teacher_mainpage_url)
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'teacher_mainpage.html' ,'teststudent')
+    def test_teacher_mainpage(self):
+        self.client.login(username='teacher', password='test123')
+        response = self.client.get(reverse('teacher_mainpage'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'teacher_mainpage.html')
 
-    # def test_login_teacher_POST(self):
-    #     self.teacher_group.user_set.add(self.user)
-    #     response = self.client.post(self.admin_login_url, {
-    #         'username': 'testuser',
-    #         'password': 'password123'
-    #     })
-    #     self.assertRedirects(response, self.home_url)
+    def test_login_teacher(self):
+        response = self.client.post(reverse('TeacherLogIn'), {
+            'username': 'teacher', 'password': 'test123'
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('teacher_mainpage'))
 
-    # def test_admin_login_POST(self):
-    #     response = self.client.post(self.admin_login_url, {
-    #         'username': 'testuser',
-    #         'password': 'password123'
-    #     })
-    #     self.assertRedirects(response, self.home_url)
+    def test_admin_login(self):
+        response = self.client.post(reverse('AdminLogIn'), {
+            'username': 'admin', 'password': 'test123'
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('HomePageAdmin'))
 
+    def test_homeadmin(self):
+        response = self.client.get(reverse('HomePageAdmin'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'HomePageAdmin.html')
 
-    # def test_teachertable_GET(self):
-    #     response = self.client.get(self.teachertable_url)
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'TeacherTable.html')
-    #
-    def test_studenttable_GET(self):
-        response = self.client.get(self.studenttable_url)
+    def test_teacher_table(self):
+        response = self.client.get(reverse('TeacherTable'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'TeacherTable.html')
+
+    def test_student_table(self):
+        response = self.client.get(reverse('StudentTable'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'StudentTable.html')
 
-    def test_add_content_POST(self):
-        response = self.client.post(reverse('AddContent', args=['testuser']), {
-            'title': 'Test Content',
-            'description': 'This is a test description',
-            'unit': 1
+    def test_add_content(self):
+        self.client.login(username='teacher', password='test123')
+        response = self.client.post(reverse('AddContent', args=['teacher']), {
+            'title': 'New Content', 'description': 'This is a new content.', 'unit': 3
         })
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, self.home_url)
-        self.assertTrue(Content.objects.filter(title='Test Content').exists())
+        self.assertTrue(Content.objects.filter(title='New Content').exists())
 
-    def test_view_content_GET(self):
-        response = self.client.get(self.view_content_url)
+    def test_content_list(self):
+        self.client.login(username='teacher', password='test123')
+        response = self.client.get(reverse('ContentList', args=['teacher']))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'ContentListTeacher.html')
+
+    def test_delete_content(self):
+        self.client.login(username='teacher', password='test123')
+        response = self.client.post(reverse('delete_content', args=[self.content.pk, 'teacher']))
+        self.assertEqual(response.status_code, 302)
+        self.assertFalse(Content.objects.filter(pk=self.content.pk).exists())
+
+    def test_view_content(self):
+        response = self.client.get(reverse('viewContent'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'viewContent.html')
 
-    def test_homestudent_GET(self):
-        response = self.client.get(self.homestudent_url)
+    def test_add_student(self):
+        response = self.client.post(reverse('addstudent'), {
+            'username': 'newstudent', 'password1': 'testpass123', 'password2': 'testpass123',
+            'email': 'student@test.com'
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(User.objects.filter(username='newstudent').exists())
+
+    def test_logout(self):
+        self.client.login(username='teacher', password='test123')
+        response = self.client.get(reverse('logout'))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('HomePage'))
+
+    def test_review_teacher_list(self):
+        response = self.client.get(reverse('Review_teacher_list'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'HomePageStudent.html')
- # def test_content_list_GET(self):
-    #     Content.objects.create(title='Test Content', description='Test Description', user='testuser')
-    #     response = self.client.get(reverse('ContentList', args=['testuser']))
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'ContentListTeacher.html', args=['testuser'])
+        self.assertTemplateUsed(response, 'Review_teacher_list.html')
 
-    # def test_delete_content_POST(self):
-    #     content = Content.objects.create(title='Test Content', description='Test Description', user='testuser')
-    #     response = self.client.post(reverse('delete_content', args=[content.id, 'testuser']))
-    #     self.assertRedirects(response, reverse('ContentList', args=['testuser']))
-    #     self.assertFalse(Content.objects.filter(title='Test Content').exists())
-
-from django.test import TestCase
-from django.urls import reverse
-from ourapp.models import Content  # Adjust this import as per your app structure
-
-
-class TestContentListView(TestCase):
-    def setUp(self):
-        # Create a test user and content for testing
-        self.testuser = User.objects.create_user(username='testuser', password='password123')
-        Content.objects.create(title='Test Content', description='Test Description', user=self.testuser)
-    def test_content_list_GET(self):
-        # Perform a GET request to the ContentList view for 'testuser'
-        self.client.login(username='testuser', password='password123')
-        response = self.client.get(reverse('ContentList', args=['testuser']))
-        # Check if the response is successful and returns status code 200
+    def test_review_student_list(self):
+        response = self.client.get(reverse('Review_Student_list'))
         self.assertEqual(response.status_code, 200)
-        # Check if the correct template 'ContentListTeacher.html' is used
-        self.assertTemplateUsed(response, 'ContentListTeacher.html')
-        # Check if the 'contents' context contains the created content
-        self.assertIn('contents', response.context)
-        self.assertEqual(len(response.context['contents']), 1)  # Adjust as per your test data
-        # Check if the rendered content matches the created content's title
-        self.assertContains(response, 'Test Content')
+        self.assertTemplateUsed(response, 'Review_Student_list.html')
+
+    def test_edit_profile(self):
+        self.client.login(username='student', password='test123')
+        response = self.client.post(reverse('EditProfileStudent', args=['student']), {
+            'bio': 'Updated bio', 'location': 'Updated location', 'birth_date': '2000-01-01'
+        })
+        self.assertEqual(response.status_code, 302)
+        self.profile.refresh_from_db()
+        self.assertEqual(self.profile.bio, 'Updated bio')
+
+    def test_update_content(self):
+        self.client.login(username='teacher', password='test123')
+        response = self.client.post(reverse('Update_Content', args=[self.content.pk, 'teacher']), {
+            'title': 'Updated Content', 'description': 'This is updated content.', 'unit': 3
+        })
+        self.assertEqual(response.status_code, 302)
+        self.content.refresh_from_db()
+        self.assertEqual(self.content.title, 'Updated Content')
+
+    def test_student_login(self):
+        response = self.client.post(reverse('StudentLogIn'), {
+            'username': 'student', 'password': 'test123'
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, reverse('HomePageStudent'))
+
+    def test_add_teacher(self):
+        response = self.client.post(reverse('AddTeacher'), {
+            'username': 'newteacher', 'password1': 'testpass123', 'password2': 'testpass123',
+            'email': 'teacher@test.com'
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(User.objects.filter(username='newteacher').exists())
+
+    def test_create_quiz(self):
+        self.client.login(username='teacher', password='test123')
+        questions = [
+            {"text": "Question 1",
+             "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False},
+                         {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]},
+            {"text": "Question 2",
+             "options": [{"text": "Option 1", "is_correct": False}, {"text": "Option 2", "is_correct": True},
+                         {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]},
+            {"text": "Question 3",
+             "options": [{"text": "Option 1", "is_correct": False}, {"text": "Option 2", "is_correct": False},
+                         {"text": "Option 3", "is_correct": True}, {"text": "Option 4", "is_correct": False}]},
+            {"text": "Question 4",
+             "options": [{"text": "Option 1", "is_correct": False}, {"text": "Option 2", "is_correct": False},
+                         {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": True}]},
+            {"text": "Question 5",
+             "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False},
+                         {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]},
+            {"text": "Question 6",
+             "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False},
+                         {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]},
+            {"text": "Question 7",
+             "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False},
+                         {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]},
+            {"text": "Question 9",
+             "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False},
+                         {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]},
+            {"text": "Question 9",
+             "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False},
+                         {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]},
+            {"text": "Question 10",
+             "options": [{"text": "Option 1", "is_correct": True}, {"text": "Option 2", "is_correct": False},
+                         {"text": "Option 3", "is_correct": False}, {"text": "Option 4", "is_correct": False}]}]

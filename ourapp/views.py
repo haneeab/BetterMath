@@ -50,7 +50,7 @@ def register_student(request):
                 group = None
             if group:
                 user.groups.add(group)
-            messages.success(request, f'Account was created for {username}')
+            messages.success(request, 'Account was created for {username}')
             return redirect('HomePage')
     else:
         form = CreatUserForm()
@@ -301,7 +301,7 @@ def AddTeacher(request):
                 group = None
             if group:
                 user.groups.add(group)
-            messages.success(request, f'Account was created for {username}')
+            messages.success(request, 'Account was created for' ,{username})
             return redirect('Review_teacher_list')
     else:
         form = CreatUserForm()
@@ -320,7 +320,7 @@ def create_quiz(request):
             form.save()
             return redirect('teacher_mainpage')
         else:
-            print(f"Debug: form.errors = {form.errors}")  # Debug statement
+            print("Debug: form.errors =", {form.errors})  # Debug statement
     else:
         form = QuizForm()
 
