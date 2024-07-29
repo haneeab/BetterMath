@@ -152,19 +152,28 @@ def TeacherTable(request):
 def studenttable(request):
     return render(request, 'StudentTable.html')
 
-def AddContent(request, username):
+from django.shortcuts import render, redirect
+from .forms import ContentForm
+from .models import User
 
+def AddContent(request, username):
+    error_message = None
     if request.method == 'POST':
         form = ContentForm(request.POST)
         if form.is_valid():
-            content = form.save(commit=False)
-            content.user = username  # Assign the correct User instance
-            content.save()
-            return redirect('ContentList', username)
+            unit = form.cleaned_data.get('unit')
+            if unit not in [3, 4, 5]:
+                error_message = "Unit must be 3, 4, or 5."
+            else:
+                content = form.save(commit=False)
+                content.user = username  # Correct User instance assignment
+                content.save()
+                return redirect('ContentList', username)
     else:
         form = ContentForm()
 
-    return render(request, 'AddContent.html', {'form': form})
+    return render(request, 'AddContent.html', {'form': form, 'error_message': error_message})
+
 
 # def check_database(request):
 #     db_path = os.path.join(settings.BASE_DIR, 'db.sqlite3')
@@ -245,16 +254,22 @@ def edit_profile(request,username):
     return render(request, 'EditProfileStudent.html', context)
 
 
-def Update_Content(request,pk,username):
-    product = Content.objects.get(pk=pk)
-    form = ContentForm(instance=product)
+def Update_Content(request, pk, username):
+    content = Content.objects.get(pk=pk)
+    error_message = None
     if request.method == 'POST':
-        form = ContentForm(request.POST, instance=product)
+        form = ContentForm(request.POST, instance=content)
         if form.is_valid():
-            form.save()
-            return redirect('ContentList',username)
-    context = {'form': form}
-    return render(request, 'UpdateContent.html', context)
+            unit = form.cleaned_data.get('unit')
+            if unit not in [3, 4, 5]:
+                error_message = "Unit must be 3, 4, or 5."
+            else:
+                form.save()
+                return redirect('ContentList', username)
+    else:
+        form = ContentForm(instance=content)
+
+    return render(request, 'UpdateContent.html', {'form': form, 'error_message': error_message})
 
 
 from django.shortcuts import render, redirect
