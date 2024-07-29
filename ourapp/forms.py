@@ -28,6 +28,7 @@ class TeacherProfileForm(forms.ModelForm):
     class Meta:
         model = Teacher
         fields = ['profile_picture', 'date_of_birth']
+
 class CreatUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
 

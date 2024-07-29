@@ -85,7 +85,7 @@ def home(request):
 
 @login_required
 def teacher_mainpage (request):
-    return  render( request,'teacher_mainpage.html')
+    return render(request,'teacher_mainpage.html')
 
 def login_teacher(request):
     if request.method == 'POST':
@@ -104,13 +104,6 @@ def login_teacher(request):
     context = {}
     return render(request, 'login_teacher.html', context)
 
-
-
-
-
-
-
-
 def contact(request):
     return HttpResponse('contact Page')
 
@@ -125,23 +118,6 @@ def AdminLogIn(request):
         else:
             messages.error(request, 'Invalid username or password')
     return render(request, 'AdminLogIn.html')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def homeadmin(request):
     return render(request, 'HomePageAdmin.html')
@@ -186,7 +162,6 @@ def ContentList(request,username):
     contents = Content.objects.filter(user=username)
     return render(request, 'ContentListTeacher.html', {'contents': contents})
 
-
 def delete_Contant(request, pk,username):
     product = Content.objects.get(pk=pk)
 
@@ -218,17 +193,22 @@ def addstudent(request):
 def logoutl(request):
     logout(request)
     return redirect('HomePage')
+
 def Review_teacher_list(request):
+    users_in_group = Group.objects.get(name='Teacher').user_set.all()
+
     teacher_group = Group.objects.get(name='Teacher')
     teachers = User.objects.filter(groups=teacher_group)
-
-    return render(request, 'Review_teacher_list.html',{'teachers':teachers} )
+    context = {'users_in_group': users_in_group}
+    return render(request, 'Review_teacher_list.html', {'users_in_group': users_in_group})
 
 def Review_Student_list(request):
+    users_in_group = Group.objects.get(name='Student').user_set.all()
+
     teacher_group = Group.objects.get(name='Student')
     teachers = User.objects.filter(groups=teacher_group)
 
-    return render(request, 'Review_Student_list.html',{'teachers':teachers} )
+    return render(request, 'Review_Student_list.html', {'users_in_group': users_in_group})
 
 
 
