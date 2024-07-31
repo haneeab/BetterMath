@@ -81,7 +81,7 @@ pipeline {
         stage('Build') {
             agent {
                 docker {
-                    image 'hnaeeab/bettermath'
+                    image 'bettermath'
                 }
             }
             steps {
@@ -93,7 +93,7 @@ pipeline {
         stage(' Unit Tests') {
             agent {
                 docker {
-                    image 'hnaeeab/bettermath'
+                    image 'bettermath'
                 }
             }
             steps {
@@ -105,7 +105,7 @@ pipeline {
         stage(' integration-test') {
             agent {
                 docker {
-                    image 'hnaeeab/bettermath'
+                    image 'bettermath'
                 }
             }
             steps {
@@ -117,7 +117,7 @@ pipeline {
         stage(' unit test coverage') {
         agent {
                 docker {
-                    image 'hnaeeab/bettermath'
+                    image 'bettermath'
                 }
             }
 			steps {
@@ -137,7 +137,7 @@ pipeline {
 		stage(' Test Trend Chart') {
 			agent {
                 docker {
-                    image 'hnaeeab/bettermath'
+                    image 'bettermath'
                 }
             }
 			steps {
