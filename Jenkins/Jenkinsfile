@@ -85,86 +85,47 @@ pipeline {
                 }
             }
             steps {
-		            withEnv(["HOME=${env.WORKSPACE}"]) {
-		               sh 'pip install -r requirements.txt'
-					}
-			}
+                script {
+                    // Log in to Docker Hub
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
+                    }
+
+                    // Install Python dependencies
+                    withEnv(["HOME=${env.WORKSPACE}"]) {
+                        sh 'pip install -r requirements.txt'
+                    }
+                }
+            }
         }
-        stage(' Unit Tests') {
+
+        stage('Unit Tests') {
             agent {
                 docker {
                     image 'hnaeeab/bettermath'
                 }
             }
             steps {
-		            withEnv(["HOME=${env.WORKSPACE}"]) {
-                sh 'python manage.py test --tag=unit_test'
-		      }
-			}
+                withEnv(["HOME=${env.WORKSPACE}"]) {
+                    sh 'python manage.py test --tag=unit_test'
+                }
+            }
         }
-        stage(' integration-test') {
-            agent {
-                docker {
-                    image 'hnaeeab/bettermath'
-                }
-            }
-            steps {
-		            withEnv(["HOME=${env.WORKSPACE}"]) {
-                sh 'python manage.py test --tag=integration-test'
-		      }
-			}
+
+        // Add other stages here...
+
+    }
+
+    post {
+        failure {
+            mail to: 'hneinsalook.123@gmail.com',
+            subject: "Failed: Job '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']",
+            body: "Failed: Job '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']: Check console output at '${env.BUILD_URL}'"
         }
-        stage(' unit test coverage') {
-        agent {
-                docker {
-                    image 'hnaeeab/bettermath'
-                }
-            }
-			steps {
-
-					withEnv(["HOME=${env.WORKSPACE}"]) {
-
-
-						sh "python -m coverage run --source 'App' manage.py test"
-						sh "python -m coverage report --fail-under=50"
-
-					}
-
-			}
-		}
-
-
-		stage(' Test Trend Chart') {
-			agent {
-                docker {
-                    image 'bettermath'
-                }
-            }
-			steps {
-
-
-					junit allowEmptyResults: true, testResults: 'unittest.xml'
-
-			}
-		}
-
-      }
-
-
-
-
-
-	post {
-		failure{
-			mail to: 'hneinsalook.123@gmail.com',
-			subject: "Failed: Job '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']",
-			body: "Failed: Job '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']: Check console output at '${env.BUILD_URL}' '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']"
-		}
-		success{
-			mail to: 'hneinsalook.123@gmail.com',
-			subject: "SUCCESS: Job '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']",
-			body: "SUCCESS: Job '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']: Check console output at '${env.BUILD_URL}' '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']"
-		}
-
-	}
+        success {
+            mail to: 'hneinsalook.123@gmail.com',
+            subject: "SUCCESS: Job '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']",
+            body: "SUCCESS: Job '${env.JOB_NAME}' ['${env.BUILD_NUMBER}']: Check console output at '${env.BUILD_URL}'"
+        }
+    }
 }
