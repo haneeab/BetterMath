@@ -25,5 +25,7 @@ urlpatterns = [
     path('Review_teacher_list', views.Review_teacher_list, name='Review_teacher_list'),
     path('Review_Student_list', views.Review_Student_list, name='Review_Student_list'),
     path('logout',views.logoutl , name='logout'),
+    path('deleteteacher/<int:pk>/', views.deleteteacher, name='deleteteacher'),
+
 
 ]

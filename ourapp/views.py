@@ -218,3 +218,13 @@ def Review_Student_list(request):
     teachers = User.objects.filter(groups=teacher_group)
 
     return render(request, 'Review_Student_list.html',{'teachers':teachers} )
+
+
+
+
+def deleteteacher(request, pk):
+    teacher = get_object_or_404(Teacher, pk=pk)
+    if request.method == 'POST':
+        teacher.delete()
+        return HttpResponseRedirect(reverse('Review_teacher_list'))
+    return render(request, 'HomePage.html', {'teacher': teacher})
