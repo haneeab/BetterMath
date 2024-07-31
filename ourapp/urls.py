@@ -24,7 +24,17 @@ urlpatterns = [
     path('HomePageStudent.html', views.homestudent, name='HomePageStudent'),
     path('Review_teacher_list', views.Review_teacher_list, name='Review_teacher_list'),
     path('Review_Student_list', views.Review_Student_list, name='Review_Student_list'),
+    path('Update_Content/<int:pk>/<str:username>/', views.Update_Content, name='Update_Content'),
+    path('EditProfileStudent.html/<str:username>/', views.edit_profile, name='EditProfileStudent'),
     path('logout',views.logoutl , name='logout'),
+    path('create_quiz', views.create_quiz, name='create_quiz'),
+    path('combined_list3', views.combined_list_3uints, name='combined_list3'),
+    path('combined_list4', views.combined_list_4uints, name='combined_list4'),
+    path('combined_list5', views.combined_list_5uints, name='combined_list5'),
+    path('StudentLogIn',views.StudentLogIn , name='StudentLogIn'),
+    path('AddTeacher',views.AddTeacher, name='AddTeacher'),
+    path('student/<str:username>/', views.DeleteStudent, name='DeleteStudent'),
+    path('EditProfileT.html/<str:username>/', views.edit_profile_Teacher, name='EditProfileTeacher'),
     path('deleteteacher/<int:pk>/', views.deleteteacher, name='deleteteacher'),
 
 

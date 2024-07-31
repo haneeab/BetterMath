@@ -49,3 +49,45 @@ class Content(models.Model):
 
     def __str__(self):
         return self.title
+
+class Profile(models.Model):
+    user = models.CharField(max_length=255,null=True)
+    bio = models.TextField(blank=True)
+    location = models.CharField(max_length=30, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
+
+
+    def __str__(self):
+        return self.user
+
+
+from django.core.exceptions import ValidationError
+from django.db import models
+
+
+class Quiz(models.Model):
+    unit= models.IntegerField(default=0)
+
+    name = models.CharField(max_length=255)
+    user = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    questions = models.JSONField()
+
+    # def clean(self):
+    #     errors = []
+    #     if not self.questions:
+    #         errors.append('Questions field cannot be empty.')
+    #     if len(self.questions) != 10:
+    #         errors.append('Each quiz must have exactly 10 questions.')
+    #     for question in self.questions:
+    #         if len(question['options']) != 4:
+    #             errors.append('Each question must have exactly 4 options.')
+    #         correct_options = [option for option in question['options'] if option['is_correct']]
+    #         if len(correct_options) != 1:
+    #             errors.append('Each question must have exactly one correct option.')
+    #
+    #     if errors:
+    #         raise ValidationError(errors)
+
+    def __str__(self):
+        return self.name
