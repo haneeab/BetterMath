@@ -30,7 +30,7 @@
 
 <main>
   <div class="add-teacher" style="margin-top: 70px">
-      <a class="btn add-btn" href="#"><i class="fas fa-plus"></i> Add Student</a>
+      <a class="btn add-btn" href="{% url 'addstudent' %}"><i class="fas fa-plus"></i> Add Student</a>
   </div>
   <ol class="gradient-list">
       {% for i in users_in_group %}

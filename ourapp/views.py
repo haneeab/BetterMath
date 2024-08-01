@@ -160,16 +160,34 @@ def viewContent(request):
 
 
 def addstudent(request):
-    form = CreatUserForm()
     if request.method == 'POST':
         form = CreatUserForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('HomePage')
-
-    conaxt = {'form': form}
-    return render(request, 'addstudent.html', conaxt)
-
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            try:
+                group = Group.objects.get(name='Student')
+            except ObjectDoesNotExist:
+                group = None
+            if group:
+                user.groups.add(group)
+            messages.success(request, 'Account was created for' ,{username})
+            return redirect('Review_Student_list')
+    else:
+        form = CreatUserForm()
+    context = {'form': form}
+    return render(request, 'addstudent.html', context)
+    # ########
+    # form = CreatUserForm()
+    # if request.method == 'POST':
+    #     form = CreatUserForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         return redirect('HomePage')
+    #
+    # conaxt = {'form': form}
+    # return render(request, 'addstudent.html', conaxt)
+    #
 
 def logoutl(request):
     logout(request)
