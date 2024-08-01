@@ -1,19 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from django.contrib.auth import login
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login,logout
-
 from django.contrib.auth.models import Group
 from .forms import CreatUserForm,ContentForm
-from .forms import UserRegisterForm, StudentProfileForm, TeacherProfileForm
-from django.contrib.auth import authenticate, login,logout
-from django.contrib.auth.models import Group
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseServerError, HttpResponseNotFound
-from django.forms import inlineformset_factory
-from django.contrib.auth.forms import UserCreationForm
+from .forms import StudentProfileForm, TeacherProfileForm
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
@@ -27,17 +16,9 @@ from .models import User
 
 from django.contrib.auth.decorators import login_required
 from .models import Content
-from .forms import ContentForm
-from django.db import IntegrityError
-
-from django.conf import settings
-from django.contrib.auth.models import User
-from django.http import HttpResponse
-import os
-from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import UserForm, ProfileForm,QuizForm
-from .models import Profile
+from .forms import UserForm, ProfileForm,QuizForm,UserRegisterForm
+from .models import Profile,User
 def register_student(request):
     if request.method == 'POST':
         form = CreatUserForm(request.POST)
@@ -338,12 +319,13 @@ def combined_list_5uints(request):
     quizzes = Quiz.objects.filter(unit=5)
     return render(request, 'Math5Units.html', {'contents': contents, 'quizzes': quizzes})
 
-def DeleteStudent(request, username):
-    student  = User.objects.get(username=username)
+def DeleteStudent(request,username):
+    users_in_group = Group.objects.get(name='Student').user_set.all()
+    student = users_in_group.filter(username=username)
     if request.method == 'POST':
         student.delete()
         return redirect('Review_Student_list')
-    context = {'student': student}
+    context = {'student': student.first().username}
     return render(request, 'DeleteStudent.html', context)
 
 def delete_Contant(request, pk,username):
