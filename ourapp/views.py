@@ -355,11 +355,10 @@ def delete_Contant(request, pk,username):
     context = {'content': product}
     return render(request, 'DeleteContent.html', context)
 
-
-
-def deleteteacher(request, pk):
-    teacher = get_object_or_404(Teacher, pk=pk)
+def deleteteacher(request, username):
+    teacher = User.objects.get(username=username)
     if request.method == 'POST':
         teacher.delete()
-        return HttpResponseRedirect(reverse('Review_teacher_list'))
-    return render(request, 'HomePage.html', {'teacher': teacher})
+        return redirect('Review_teacher_list')
+    context = {'teacher': teacher}
+    return render(request, 'deleteteacher.html', context)

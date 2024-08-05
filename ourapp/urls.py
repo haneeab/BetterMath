@@ -35,7 +35,7 @@ urlpatterns = [
     path('AddTeacher',views.AddTeacher, name='AddTeacher'),
     path('student/<str:username>/', views.DeleteStudent, name='DeleteStudent'),
     path('EditProfileT.html/<str:username>/', views.edit_profile_Teacher, name='EditProfileTeacher'),
-    path('deleteteacher/<int:pk>/', views.deleteteacher, name='deleteteacher'),
 
+    path('deleteteacher/<str:username>/', views.deleteteacher, name='deleteteacher'),
 
 ]
