@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import register_student, register_teacher ,AddContent,logoutl
+from .views import register_student, register_teacher ,AddContent,logoutl,DeleteStudent
 from .views import register_student, register_teacher ,AddContent,Review_teacher_list
 from ourapp import views
 
