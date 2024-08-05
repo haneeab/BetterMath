@@ -420,3 +420,11 @@ def delete_Contant(request, pk,username):
         return redirect('ContentList' ,username)
     context = {'content': product}
     return render(request, 'DeleteContent.html', context)
+
+def deleteteacher(request, username):
+    teacher = User.objects.get(username=username)
+    if request.method == 'POST':
+        teacher.delete()
+        return redirect('Review_teacher_list')
+    context = {'teacher': teacher}
+    return render(request, 'deleteteacher.html', context)

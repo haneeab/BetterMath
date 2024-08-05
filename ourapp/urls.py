@@ -38,4 +38,6 @@ urlpatterns = [
     path('UpdateTeacher.html/<str:username>/', views.update_teacher, name='updateteacher'),
     path('UpdateStudent.html/<str:username>/', views.update_student, name='updatestudent'),
 
+    path('deleteteacher/<str:username>/', views.deleteteacher, name='deleteteacher'),
+
 ]
