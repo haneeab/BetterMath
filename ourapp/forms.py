@@ -49,9 +49,11 @@ class UserForm(forms.ModelForm):
         fields = ['first_name', 'last_name', 'email']
 
 class ProfileForm(forms.ModelForm):
+    birth_date = forms.DateField(input_formats=['%d/%m/%Y'])
     class Meta:
         model = Profile
         fields = ['bio', 'location', 'birth_date']
+
 
 
 from django import forms
@@ -95,3 +97,13 @@ class QuizForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+# class UpdateTeacherForm(forms.ModelForm):
+#     class Meta:
+#         model = Teacher
+#         fields = ['profile_picture', 'date_of_birth']
+class UpdateUserForm(forms.ModelForm):
+    email = forms.EmailField(required=True)
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name']

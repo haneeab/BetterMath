@@ -55,7 +55,7 @@
           </div>
           <div class="teacher-actions">
               <a class="btn delete-btn" href="{% url 'DeleteStudent' username=i.username %}"><i class="fas fa-trash-alt"></i> Delete Student</a>
-              <a class="btn edit-btn" href="#"><i class="fas fa-edit"></i> Edit Student</a>
+              <a class="btn edit-btn" href="{% url 'updatestudent' username=i.username %}"><i class="fas fa-edit"></i> Edit student</a>
           </div>
       </li>
       {% endfor %}

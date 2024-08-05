@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import register_student, register_teacher ,AddContent,logoutl,DeleteStudent
-from .views import register_student, register_teacher ,AddContent,Review_teacher_list
+from .views import register_student, register_teacher ,AddContent,Review_teacher_list,update_student
 from ourapp import views
 
 
@@ -35,5 +35,7 @@ urlpatterns = [
     path('AddTeacher',views.AddTeacher, name='AddTeacher'),
     path('student/<str:username>/', views.DeleteStudent, name='DeleteStudent'),
     path('EditProfileT.html/<str:username>/', views.edit_profile_Teacher, name='EditProfileTeacher'),
+    path('UpdateTeacher.html/<str:username>/', views.update_teacher, name='updateteacher'),
+    path('UpdateStudent.html/<str:username>/', views.update_student, name='updatestudent'),
 
 ]

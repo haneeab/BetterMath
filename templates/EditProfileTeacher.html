@@ -131,7 +131,7 @@
                                 <label class="label-text">LOCATION</label>
                             </div>
                             <div class="labetextedit">
-                                <input type="text" name="birth_date" id="birth_date" class="profile-input" required value="{{ profile_form.birth_date.value }}">
+                                <input  name="birth_date" class="profile-input" required value="{{ profile_form.birth_date.value }}">
                                 <label class="label-text">BIRTH DATE</label>
                             </div>
                         </div>
@@ -151,31 +151,5 @@
     <script src="{% static 'js/magnific-popup-options.js' %}"></script>
     <script src="{% static 'js/click-scroll.js' %}"></script>
     <script src="{% static 'js/custom.js' %}"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var birthDateInput = document.getElementById('birth_date');
-
-            // Format the value on load
-            birthDateInput.value = formatDateToDDMMYYYY(birthDateInput.value);
-
-            // Add event listener for changes
-            birthDateInput.addEventListener('change', function() {
-                this.value = formatDateToDDMMYYYY(this.value);
-            });
-
-            function formatDateToDDMMYYYY(dateString) {
-                if (!dateString) return '';
-                var parts = dateString.split('-');
-                if (parts.length !== 3) return dateString;
-
-                // Ensure all parts are numbers and pad with zeroes if necessary
-                var year = parts[0].padStart(4, '0');
-                var month = parts[1].padStart(2, '0');
-                var day = parts[2].padStart(2, '0');
-
-                return `${day}/${month}/${year}`;
-            }
-        });
-    </script>
 </body>
 </html>

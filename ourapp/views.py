@@ -17,7 +17,7 @@ from .models import User
 from django.contrib.auth.decorators import login_required
 from .models import Content
 from django.contrib.auth.decorators import login_required
-from .forms import UserForm, ProfileForm,QuizForm,UserRegisterForm
+from .forms import UserForm, ProfileForm,QuizForm,UserRegisterForm,UpdateUserForm
 from .models import Profile,User
 def register_student(request):
     if request.method == 'POST':
@@ -337,6 +337,72 @@ def combined_list_5uints(request):
     quizzes = Quiz.objects.filter(unit=5)
     return render(request, 'Math5Units.html', {'contents': contents, 'quizzes': quizzes})
 
+
+# from .forms import UpdateUserForm, UpdateStudentForm  # Adjust import based on your form names
+# from django.contrib.auth.models import User
+# from django.shortcuts import render, redirect
+# from .forms import UpdateUserForm, UpdateTeacherForm
+# from .models import Teacher
+#
+#
+#
+from django.shortcuts import render, redirect, get_object_or_404
+
+
+def update_student(request, username):
+    try:
+        # Get the student group
+        student_group = Group.objects.get(name='Student')
+
+        # Get the user instance from the student group
+        user = student_group.user_set.get(username=username)
+
+        if request.method == 'POST':
+            form = UpdateUserForm(request.POST, instance=user)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Student profile updated successfully.')
+                return redirect('HomePageStudent')
+            else:
+                messages.error(request, 'Please correct the errors below.')
+        else:
+            form = UpdateUserForm(instance=user)
+
+        return render(request, 'UpdateStudent.html', {'form': form})
+
+    except User.DoesNotExist:
+        messages.error(request, 'User not found.')
+        return redirect('HomePageStudent')
+    except Group.DoesNotExist:
+        messages.error(request, 'Student group not found.')
+        return redirect('HomePageStudent')
+def update_teacher(request,username):
+    try:
+        # Get the student group
+        student_group = Group.objects.get(name='Student')
+
+        # Get the user instance from the student group
+        user = student_group.user_set.get(username=username)
+
+        if request.method == 'POST':
+            form = UpdateUserForm(request.POST, instance=user)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Student profile updated successfully.')
+                return redirect('HomePageStudent')
+            else:
+                messages.error(request, 'Please correct the errors below.')
+        else:
+            form = UpdateUserForm(instance=user)
+
+        return render(request, 'UpdateStudent.html', {'form': form})
+
+    except User.DoesNotExist:
+        messages.error(request, 'User not found.')
+        return redirect('HomePageStudent')
+    except Group.DoesNotExist:
+        messages.error(request, 'Student group not found.')
+        return redirect('HomePageStudent')
 def DeleteStudent(request,username):
     users_in_group = Group.objects.get(name='Student').user_set.all()
     student = users_in_group.filter(username=username)
